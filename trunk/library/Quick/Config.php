@@ -39,15 +39,16 @@ class Quick_Config extends Zend_Config
     }
     
     public function get($name, $default = null)
-    {
+    {    	
         if (strstr($name, '/')) {
             $sections = explode('/', $name);
         } else {
             $sections = array($name);
-        }
+        }        
+        $section = array_shift($sections); 
         
-        $section = array_shift($sections);
         if (!array_key_exists($section, $this->_data)) {
+        	// $section name not in _data of Config object, access database
             $this->_load($section, $default);
         }
         
@@ -65,17 +66,16 @@ class Quick_Config extends Zend_Config
     }
     
     private function _load($key, $default)
-    {    	
+    {
+    	// load config on database or not in database
         if (null === $this->_siteId) {
-        	echo $key;
             $this->_siteId = Quick::getSiteId();
         }
-        
-        $rows = Ecart::single('core/config_field')->getFieldsByKey(
+        $rows = Quick::single('core/config_field')->getFieldsByKey(
             $key, $this->_siteId
         );
         $this->_siteId = null;
-        
+
         if (!sizeof($rows)) {
             $this->_data[$key] = $default;
             return;
@@ -83,7 +83,7 @@ class Quick_Config extends Zend_Config
         
         $values = array();
         foreach ($rows as $path => $row) {
-            $parts = explode('/', $path);
+            $parts = explode('/', $path);            
             switch ($row['config_type']) {
                 case 'string':
                     $value = $row['value'];
@@ -95,7 +95,7 @@ class Quick_Config extends Zend_Config
                     $value = (bool) $row['value'];
                     break;
                 case 'handler':
-                    $class = 'Ecart_Collect_Handler_' . ucfirst($row['model']);
+                    $class = 'Quick_Collect_Handler_' . ucfirst($row['model']);
                     if ($row['model']) {
                         $value = call_user_func(array($class, 'getConfig'), $row['value']);
                     } else {
@@ -114,14 +114,14 @@ class Quick_Config extends Zend_Config
                     break;
             }
             $values[$parts[0]][$parts[1]][$parts[2]] = $value;
-        }
-        foreach ($values as $key => $value) {
-            if (is_array($value)) {
-                $this->_data[$key] = new Ecart_Config($value, $this->_allowModifications);
+        }        
+        
+        foreach ($values as $key => $value) {        	
+            if (is_array($value)) {            	
+                $this->_data[$key] = new Quick_Config($value, $this->_allowModifications);
             } else {
                 $this->_data[$key] = $value;
             }
-        }
-    }
-    
+        }       
+    }    
 }

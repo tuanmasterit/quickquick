@@ -158,31 +158,65 @@ class Quick_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
 	protected function _initCache()
     {
-        /*if (null === Quick::db()) {
+        if (null === Quick::db()) {
             $this->bootstrap('DbAdapter');
         }
         //create default cache
-        $cache = Ecart_Core_Model_Cache::getCache();
+        $cache = Quick_Core_Model_Cache::getCache();
         //create database metacache
         Zend_Db_Table_Abstract::setDefaultMetadataCache($cache);
   
-        return Quick::cache();*/
+        return Quick::cache();
     }
     
 	protected function _initLocale()
     {
         $this->bootstrap('Cache');
         $defaultLocale = Quick_Locale::getDefaultLocale();
-        $locales = Quick_Locale::getLocaleList(true);
-        print_r($locales);
-/*
+        $locales = Quick_Locale::getLocaleList();
+        
+
         //set default timezone affect on date() and Quick_Date
         Quick_Locale::setTimezone(Quick_Locale::getDefaultTimezone());
         // pre router config
         Quick_Controller_Router_Route::setDefaultLocale($defaultLocale);
-        Quick_Controller_Router_Route::setLocales($locales);
+       	Quick_Controller_Router_Route::setLocales($locales);
 
         Quick_Controller_Router_Route_Module::setDefaultLocale($defaultLocale);
-        Quick_Controller_Router_Route_Module::setLocales($locales);*/
+        Quick_Controller_Router_Route_Module::setLocales($locales);
+    }
+    
+	protected function _initRouter()
+    {
+        $this->bootstrap('Cache');
+        $router = new Quick_Controller_Router_Rewrite();
+        // include routes files
+        $routes = Quick::getRoutes();
+        foreach ($routes as $route) {
+            include_once($route);
+        }
+
+        $router->removeDefaultRoutes();
+		
+        if (!($router instanceof Quick_Controller_Router_Rewrite)) {
+            throw new Quick_Exception('Incorrect routes');
+        }
+        Zend_Controller_Front::getInstance()->setRouter($router);
+        return $router;
+    }
+    
+	protected function _initFrontController()
+    {
+        $this->bootstrap('Router');
+        $front = Zend_Controller_Front::getInstance();       
+        $front->setDefaultModule('Quick_Core');
+        $front->setControllerDirectory(Quick::getControllers());
+        //$front->setRouter($router);
+        $front->setParam('noViewRenderer', true);
+        $front->registerPlugin(
+            new Quick_Controller_Plugin_ErrorHandler_Override()
+        );
+
+        return $front; // this is *VERY* important
     }
 }

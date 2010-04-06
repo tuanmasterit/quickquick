@@ -42,7 +42,8 @@ class Quick_Locale
      * @return string Locale ISO code
      */
     public static function getDefaultLocale()
-    {  
+    {
+    	// access database for multi locale
         return self::DEFAULT_LOCALE;
     }
     
@@ -58,5 +59,34 @@ class Quick_Locale
             return array_keys(Zend_Locale::getLocaleList());
         }
         return Quick::single('locale/language')->getLocaleList();
+    }
+    
+	/**
+     * get default store timezone
+     *
+     * @static
+     * @return  string  example : "Australia/Hobart"
+     */
+    public static function getDefaultTimezone()
+    {    	
+        return Quick::config()->main->store->timezone;
+    }
+    
+	/** 
+     * set timezone
+     *
+     * @static
+     * @param mixed void|string
+     * @return bool  
+     */
+    public static function setTimezone($timezone = null)
+    {
+        if (null === $timezone) {
+            $timezone = Quick::config()->main->store->timezone;
+        }
+        if (@date_default_timezone_set($timezone)) {
+            return true;
+        }
+        return @date_default_timezone_set(self::DEFAULT_TIMEZONE);
     }
 }
