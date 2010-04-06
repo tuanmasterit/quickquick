@@ -2,8 +2,8 @@
 
 $config = array(
     'system' => array(
-        'path'    => 'D:/program/xampp/htdocs/quickquick',
-        'baseurl' => 'http://localhost/quickquick'
+        'path'    => 'D:/ProgramFile/xampp/htdocs/quick',
+        'baseurl' => 'http://localhost/quick'
     ),
     
     'crypt' => array(

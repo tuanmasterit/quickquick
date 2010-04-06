@@ -250,4 +250,58 @@ class Quick
         return $result;        
     }
     
+	/**
+     * Return current template
+     *
+     * @static
+     * @param string ['front' || 'admin']
+     * @return array 
+     */
+    public static function getTemplate($app = 'front')
+    {
+        if (null === self::$template) {
+            if ($app == 'admin') {
+                $templateId = self::config()->design->main->adminTemplateId;
+            } else {
+                $templateId = self::config()->design->main->frontTemplateId;
+            }
+            
+            self::$template = self::model('core/template')->fetchRow(
+                self::db()->quoteInto('id = ? ', $templateId)
+            )->toArray(); 
+        }
+        return self::$template;
+    }
+    
+	/**
+     * Return requested model instance
+     *
+     * @static
+     * @param string $model
+     * @param array $arguments class arguments
+     * @return Quick_Db_Table_Abstract
+     */
+    public static function model($model, $arguments = array())
+    {
+        $class = self::_getClass($model, 'model');
+        
+        return new $class($arguments);
+    }
+    
+	/**
+     *
+     * @param string $module
+     * @return Ecart_Translate
+     */
+    public static function translate($module = 'Quick_Core')
+    {
+        if (false === strpos($module, '_')) {
+            $module = 'Quick_' . $module;
+        }
+        $module = str_replace(
+            ' ', '_', ucwords(str_replace('_', ' ', $module))
+        );
+
+        return Quick_Translate::getInstance($module);
+    }
 }
