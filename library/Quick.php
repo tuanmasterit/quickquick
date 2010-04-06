@@ -28,7 +28,7 @@ class Quick
                     'Config is not initialized'
                 )*/
             );
-        }
+        }        
         if (null === $name) {
             return Zend_Registry::get('config');
         } else {
@@ -164,6 +164,90 @@ class Quick
             }
         }
         return self::$siteId;
+    }
+    
+	/**
+     * Retrieve cache object
+     *
+     * @static
+     * @return Zend_Cache_Core
+     */
+    public static function cache() 
+    {
+        return Zend_Registry::get('cache');
+    }
+    
+	/**
+     * Retrieve array of paths to route files
+     *
+     * @static
+     * @return array 
+     */
+    public static function getRoutes()
+    {
+        if (!($routes = self::cache()->load('routes_list'))) {
+            $modules = self::getModules();            
+            $routes = array();
+            foreach ($modules as $moduleCode => $path) {            	
+                if (file_exists($path . '/etc/routes.php') 
+                    && is_readable($path . '/etc/routes.php')) {
+                    
+                    $routes[] = $path . '/etc/routes.php';
+                }
+            }            
+            self::cache()->save(
+                $routes, 'routes_list', array('modules')
+            );
+        }
+        return $routes;
+    }
+    
+	/**
+     * Retrieve the list of active, installed modules
+     *
+     * @static
+     * @return array code => path pairs
+     */
+    public static function getModules()
+    {
+        if (Zend_Registry::isRegistered('modules')) {
+            return Zend_Registry::get('modules');
+        }
+        if (!$modules = self::cache()->load('modules_list')) {
+            $list = Quick::single('core/module')->getList('is_active = 1');            
+            $result = array();
+            foreach ($list as $moduleCode => $values) {
+                list($category, $module) = explode('_', $moduleCode, 2);
+                $modules[$moduleCode] = Quick::config()->system->path
+                    . '/app/code/' . $category . '/' . $module;
+            }
+            self::cache()->save($modules, 'modules_list', array('modules'));
+        }
+        Zend_Registry::set('modules', $modules);
+        return Zend_Registry::get('modules');
+    }
+    
+	/**
+     * Retrieve the controllers paths
+     *
+     * @static
+     * @return array code => path pairs
+     */
+    public static function getControllers()
+    {
+        if (!$result = self::cache()->load('controllers_list')) {
+            $modules = self::getModules();
+            $result = array();
+            foreach ($modules as $moduleCode => $path) {
+                if (is_readable($path . '/controllers')) {
+                    $result[$moduleCode] = $path . '/controllers';
+                }
+            }
+            self::cache()->save(
+                $result, 'controllers_list', array('modules')
+            );
+        }
+        return $result;        
     }
     
 }
