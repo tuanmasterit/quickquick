@@ -85,7 +85,6 @@ class Zend_Application_Bootstrap_Bootstrap
      */
     public function run()
     {
-    	echo "run";
         $front   = $this->getResource('FrontController');
         $default = $front->getDefaultModule();
         if (null === $front->getControllerDirectory($default)) {
