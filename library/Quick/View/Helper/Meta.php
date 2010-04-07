@@ -109,12 +109,8 @@ class Quick_View_Helper_Meta
                     }
 
                 break;
-                case 'site name':
-                    $row = Quick::single('core/site')
-                        ->find(Quick::getSiteId())->current();
-                    if ($row) {
-                        $titleArray[] = $row->name;
-                    }
+                case 'site name':                    
+                	$titleArray[] = Quick::config()->system->namesite;
                 break;
             }
         }

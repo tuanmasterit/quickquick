@@ -7,7 +7,7 @@
  */
 class Quick
 {
-	static $siteId = 0;
+	static $siteId = 1;
     
     static $template;
     
@@ -23,11 +23,7 @@ class Quick
     public static function config($name = null, $default = null)
     {
         if (!Zend_Registry::isRegistered('config')) {
-            throw new Quick_Exception(
-                /*Quick::translate('core')->__(
-                    'Config is not initialized'
-                )*/
-            );
+            throw new Quick_Exception('Config is not initialized');
         }        
         if (null === $name) {
             return Zend_Registry::get('config');
@@ -152,17 +148,6 @@ class Quick
      */
     public static function getSiteId()
     {
-        if (!self::$siteId) {
-            $url = Quick::getCurrentUrl();
-            if (!self::$siteId = self::single('core/site')->getIdByUrl($url)) {
-                // provide site access through ip-address
-                if (!self::$siteId = self::single('core/site')->fetchOne('id')) {
-                    throw new Quick_Exception(
-                        "There is no site linked with url " . $url
-                    );
-                }
-            }
-        }
         return self::$siteId;
     }
     
@@ -186,9 +171,9 @@ class Quick
     public static function getRoutes()
     {
         if (!($routes = self::cache()->load('routes_list'))) {
-            $modules = self::getModules();            
+            $modules = self::getModules();           
             $routes = array();
-            foreach ($modules as $moduleCode => $path) {            	
+            foreach ($modules as $moduleCode => $path) {
                 if (file_exists($path . '/etc/routes.php') 
                     && is_readable($path . '/etc/routes.php')) {
                     
@@ -221,9 +206,9 @@ class Quick
                 $modules[$moduleCode] = Quick::config()->system->path
                     . '/app/code/' . $category . '/' . $module;
             }
-            self::cache()->save($modules, 'modules_list', array('modules'));
+            self::cache()->save($modules, 'modules_list', array('modules'));            
         }
-        Zend_Registry::set('modules', $modules);
+        Zend_Registry::set('modules', $modules);        
         return Zend_Registry::get('modules');
     }
     
@@ -249,30 +234,7 @@ class Quick
         }
         return $result;        
     }
-    
-	/**
-     * Return current template
-     *
-     * @static
-     * @param string ['front' || 'admin']
-     * @return array 
-     */
-    public static function getTemplate($app = 'front')
-    {
-        if (null === self::$template) {
-            if ($app == 'admin') {
-                $templateId = self::config()->design->main->adminTemplateId;
-            } else {
-                $templateId = self::config()->design->main->frontTemplateId;
-            }
-            
-            self::$template = self::model('core/template')->fetchRow(
-                self::db()->quoteInto('id = ? ', $templateId)
-            )->toArray(); 
-        }
-        return self::$template;
-    }
-    
+        
 	/**
      * Return requested model instance
      *
@@ -287,21 +249,27 @@ class Quick
         
         return new $class($arguments);
     }
+   
+	/**
+     * Retrieve Quick_Message object
+     *
+     * @static
+     * @return Quick_Message
+     */
+    public static function message($namespace = 'messenger')
+    {
+        return Quick_Message::getInstance($namespace);
+    }
     
 	/**
      *
-     * @param string $module
-     * @return Ecart_Translate
+     * @param 	string $value
+     * @return	echo array
      */
-    public static function translate($module = 'Quick_Core')
+    public static function _p($value)
     {
-        if (false === strpos($module, '_')) {
-            $module = 'Quick_' . $module;
-        }
-        $module = str_replace(
-            ' ', '_', ucwords(str_replace('_', ' ', $module))
-        );
-
-        return Quick_Translate::getInstance($module);
+        echo "<pre>";
+        print_r($value);
+        echo "</pre>";
     }
 }

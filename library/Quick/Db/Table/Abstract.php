@@ -105,22 +105,10 @@ abstract class Quick_Db_Table_Abstract extends Zend_Db_Table_Abstract
             
             $conditionField = current($this->info('primary'));
         }
-//        if (!in_array($conditionField, $columns)
-//            || !in_array($ruturnField, $columns)) {
-//            
-//            throw new Quick_Exception(
-//                Quick::translate('core')->__('Incorrect condition ') .
-//                    $call . ' ( ' . $ruturnField . ', ' .$conditionField . ' )'
-//            );
-//        }
         
         $conditionValue = current($argv);
         if (null === $conditionValue) {
-            throw new Quick_Exception(
-                Quick::translate('core')->__(
-                    'Condition "%" is null', $conditionField
-                )
-            );
+            throw new Quick_Exception('Condition "%" is null', $conditionField);
         }
         switch (substr($call, 0, 3)) {
             case 'get':
