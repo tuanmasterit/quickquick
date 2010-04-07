@@ -6,15 +6,18 @@
  * @subpackage  Controller
  * @author      trungpm
  */
-class Quick_Catalog_IndexController extends Quick_Core_Controller_Front
+class Quick_Catalog_IndexController extends Quick_Core_Controller_Back
 {
     public function init()
     {
-    	        
+    	parent::init();
     }
 
-    public function indexAction()
+	public function viewAction()
     {
+        $this->view->pageTitle = 'Product Catalog';
         
+        $this->render();
     }
+
 }
