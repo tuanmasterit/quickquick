@@ -17,15 +17,11 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 	 */
 	private function _getScriptsPath($app)
 	{
-		if ('front' === $app) {
+		if ('admin' === $app) {
 			list($category, $module) = explode(
                 '_', strtolower($this->getRequest()->getModuleName()), 2
 			);
-		} else {
-			$controller = $this->getRequest()->getControllerName();
-			$module = false === strpos($controller, '_') ?
-                'core' : current(explode('_', $controller));
-		}
+		} //else another app
 		return $module;
 	}
 
@@ -108,7 +104,7 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 		$view->addHelperPath($templatePath . '/helpers', 'Quick_View_Helper');
 		$view->addScriptPath($templatePath . '/templates');
 		$view->addScriptPath($templatePath . '/templates/' . $module);
-
+		
 		//for compatibility
 		$viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
             'viewRenderer'
@@ -162,7 +158,7 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 		$this->db = Quick::db();
 
 		$module = $this->getRequest()->getParam('module'); // = $this->getRequest()->getModuleName()
-		$app = ($module === 'Quick_Core') ? 'admin' : '';
+		$app = ($module === 'Quick_Front') ? 'front' : 'admin';
 		Zend_Registry::set('app', $app);
 
 		$template = array(
