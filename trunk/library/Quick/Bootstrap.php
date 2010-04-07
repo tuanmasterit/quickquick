@@ -174,7 +174,6 @@ class Quick_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('Cache');
         $defaultLocale = Quick_Locale::getDefaultLocale();
         $locales = Quick_Locale::getLocaleList();
-        
 
         //set default timezone affect on date() and Quick_Date
         Quick_Locale::setTimezone(Quick_Locale::getDefaultTimezone());
@@ -208,7 +207,7 @@ class Quick_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	protected function _initFrontController()
     {
         $this->bootstrap('Router');
-        $front = Zend_Controller_Front::getInstance();       
+        $front = Zend_Controller_Front::getInstance();
         $front->setDefaultModule('Quick_Core');
         $front->setControllerDirectory(Quick::getControllers());
         //$front->setRouter($router);
