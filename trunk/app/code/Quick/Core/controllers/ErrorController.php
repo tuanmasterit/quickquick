@@ -10,9 +10,7 @@ class ErrorController extends Quick_Controller_Action
 {
     public function errorAction()
     {
-        $this->view->pageTitle = Quick::translate('core')->__(
-            'An error has occured processing your request'
-        );
+        $this->view->pageTitle = 'An error has occured processing your request';
         $this->_helper->layout->setLayout('layout_error');
         $errors = $this->_getParam('error_handler');
         $exception = $errors->exception;
@@ -33,7 +31,7 @@ class ErrorController extends Quick_Controller_Action
         
         //$this->getResponse()->clearBody();
         $this->view->error = $exception->getMessage() . 
-            "\n<strong>" . Quick::translate('core')->__('Trace') . ":</strong>\n"
+            "\n<strong>" . 'Trace' . ":</strong>\n"
             . $this->view->escape($exception->getTraceAsString());
     }
 }

@@ -137,10 +137,7 @@ class Quick_Core_Model_Cache extends Quick_Db_Table
             }
             $row->save();
         }
-        Quick::message()->addSuccess(
-            Quick::translate('core')->__(
-                'Data was saved successffully'
-        ));
+        Quick::message()->addSuccess('Data was saved successffully');
         return true;
     }
     
