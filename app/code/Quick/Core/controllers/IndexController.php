@@ -6,27 +6,18 @@
  * @subpackage  Controller
  * @author      trungpm
  */
-class IndexController extends Quick_Core_Controller_Front
+class IndexController extends Quick_Core_Controller_Back
 {
-    public function init()
+	public function init()
     {
-        parent::init();
-        $this->view->crumbs()->disable();
+        parent::init();        
     }
-
+    
     public function indexAction()
     {
-        /*$this->view->meta()
-            ->setTitle(Quick::config()->design->htmlHead->homeTitle)
-            ->setDescription(Quick::config()->design->htmlHead->homeDescription)
-            ->setKeywords(Quick::config()->design->htmlHead->homeKeywords)
-        ; */
-    	echo "ddd";
-    	$this->view->meta()
-            ->setTitle("Quick::config()->design->htmlHead->homeTitle")
-            ->setDescription("Quick::config()->design->htmlHead->homeDescription")
-            ->setKeywords("Quick::config()->design->htmlHead->homeKeywords")
-        ; 
+        //$this->view->pageTitle = Ecart::translate('admin')->__('Home');
+        $this->view->pageTitle = 'Home';
+        
         $this->render();
     }
 }

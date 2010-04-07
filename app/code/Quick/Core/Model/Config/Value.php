@@ -63,19 +63,13 @@ class Quick_Core_Model_Config_Value extends Quick_Db_Table
     public function save($data)
     {
         if (!$row = $this->fetchRow($this->_name . '.`path` = "' . $data['path'] . '"')) {
-            Quick::message()->addError(
-                Quick::translate('core')->__(
-                    "Config field '%s' was not found", $data['path']
-            ));
+            Quick::message()->addError("Config field '%s' was not found", $data['path']);
             return false;
         }
         $row->value = $data['value'];
         $row->site_id = isset($data['site_id']) ? $data['site_id'] : 0;
         $row->save();
-        Quick::message()->addSuccess(
-            Quick::translate('core')->__(
-                'Data was saved successfully'
-        ));
+        Quick::message()->addSuccess('Data was saved successfully');
         return true;
     }
     
