@@ -30,10 +30,8 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
     public function init()
     {
         parent::init();        
-        /*$this->view->adminUrl = '/' . trim(
-            Quick::config()->main->store->adminRoute, '/ '
-        );
-
+        $this->view->adminUrl = Quick::config()->system->adminurl;
+		/*
         Zend_Auth::getInstance()->setStorage(
             new Zend_Auth_Storage_Session('admin')
         );

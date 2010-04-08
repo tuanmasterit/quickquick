@@ -80,6 +80,7 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 		$view->catalogUrl = Quick::config()->catalog->main->catalogRoute;
 		$view->skinUrl = $view->baseUrl . '/skin/'
 		. $app . '/' . $template['name'];
+		
 		//@todo every template shoud have own defaults
 		$view->defaultTemplate = 'default';
 
