@@ -4,7 +4,8 @@ $config = array(
     'system' => array(
         'path'		=> 'D:/program/xampp/htdocs/quickquick',
         'baseurl' 	=> 'http://localhost/quickquick',
-		'namesite'	=> 'Quick Quick - ERP'
+		'namesite'	=> 'Quick Quick - ERP',
+		'adminurl'	=> '/'
         ),
         
     'crypt' => array(
@@ -26,5 +27,9 @@ $config = array(
     'template' => array(
         'name'			=> "default",
         'default_layout'=> "_default"          
+        ),
+    
+    'developer' => array(
+        'enable_proxy'	=> 1
         )
         );

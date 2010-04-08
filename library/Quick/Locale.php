@@ -10,7 +10,8 @@ class Quick_Locale
     const DEFAULT_LOCALE    = 'en_US';
     const DEFAULT_CURRENCY  = 'USD';
     const DEFAULT_TIMEZONE  = 'America/Los_Angeles';
-    
+    const DEFAULT_LOCALENAME  = 'English';
+    	    
 	/**
      * Retrieve default locale from config
      *
