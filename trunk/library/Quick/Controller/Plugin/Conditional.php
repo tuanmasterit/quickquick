@@ -3,9 +3,11 @@
  * Plugin to support conditional GET for php pages (using ETag)
  * Should be loaded the very last in the plugins stack
  * 
- * @category    Quick
+ * @category    Ecart
  * @package     Quick_Cache
- * @author		trungpm
+ * @copyright   Copyright 2008-2009 E-Cart LLC
+ * @copyright   $Author: danila $
+ * @license     GNU Public License V3.0
  */
 
 /**
