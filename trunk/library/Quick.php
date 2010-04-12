@@ -262,6 +262,21 @@ class Quick
     }
     
 	/**
+     * Dispatch event
+     * 
+     * Calls all of the methods linked to dispatched event
+     * 
+     * @static
+     * @param string $name
+     * @param array $data [optional]
+     * @return Quick_Event_Observer
+     */
+    public static function dispatch($name, array $data = array())
+    {
+        return Quick_Auth_Observer::getInstance()->dispatch($name, $data);
+    }
+    
+	/**
      *
      * @param 	string $value
      * @return	echo array

@@ -52,18 +52,15 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
     {
         if (!$this->_disableAuth) {
             if (!Zend_Auth::getInstance()->hasIdentity()) {
-                /*if ($this->getRequest()->isXmlHttpRequest()) {
+                if ($this->getRequest()->isXmlHttpRequest()) {
                     Quick::message()->addError('Your session has been expired. Please relogin');
-
-                    $this->_helper->json->sendFailure();
-
+                    //$this->_helper->json->sendFailure();
                     die();
-                    // Zend_Controller_Action_Helper_Json if $suppressExit = true;
-                }*/
+                }
                 $this->_forward('index', 'auth', 'Quick_Core');
-            } elseif (!Quick::single('admin/user')->find(
+            } elseif (!Quick::single('general/user')->find(
                     Zend_Auth::getInstance()->getIdentity())->current()) {
-                $this->view->action('logout', 'auth', 'Quick_Admin');
+                $this->view->action('logout', 'auth', 'Quick_Core');
             }
         }
     }
