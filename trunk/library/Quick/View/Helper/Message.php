@@ -4,7 +4,7 @@
  * @category    Quick
  * @package     Quick_Message
  * @subpackage  Helper
- * @author      Quick Core Team <core@Quickcommerce.com>
+ * @author      trungpm
  */
 class Quick_View_Helper_Message
 {
