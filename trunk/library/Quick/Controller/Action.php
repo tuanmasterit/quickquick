@@ -77,7 +77,7 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 		$dbBaseUrl = Quick::config()->system->baseurl;
 		$view->baseUrl = $dbBaseUrl ?
 		$dbBaseUrl : Zend_Controller_Front::getInstance()->getBaseUrl();
-		$view->catalogUrl = Quick::config()->catalog->main->catalogRoute;
+		//$view->catalogUrl = Quick::config()->catalog->main->catalogRoute;
 		$view->skinUrl = $view->baseUrl . '/skin/'
 		. $app . '/' . $template['name'];
 		
@@ -101,7 +101,7 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 		. '/app/design/'
 		. $app . '/'
 		. $template['name'];
-
+		
 		$view->addHelperPath($templatePath . '/helpers', 'Quick_View_Helper');
 		$view->addScriptPath($templatePath . '/templates');
 		$view->addScriptPath($templatePath . '/templates/' . $module);
@@ -166,7 +166,7 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 			"name" 			=> Quick::config()->template->name,
 			"default_layout"=> Quick::config()->template->default_layout
 		);
-		$this->initView($app, $template);
+		$this->initView($app, $template);		
 		$this->initLayout($this->view, $app, $template);
 		$this->_siteId = Quick::getSiteId();
 
