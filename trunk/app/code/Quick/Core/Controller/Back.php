@@ -31,43 +31,36 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
     {
         parent::init();        
         $this->view->adminUrl = Quick::config()->system->adminurl;
-		/*
+	
         Zend_Auth::getInstance()->setStorage(
             new Zend_Auth_Storage_Session('admin')
         );
         
-        $this->acl = Quick::single('admin/acl');
+        $this->acl = Quick::single('core/acl');
         if (!empty(Quick::session()->roleId)) {
             $this->acl->loadRules(Quick::session()->roleId);
-        }*/
+        }
     }
     
     public function preDispatch()
     {
-        /*$url = Quick::getCurrentUrl();
-        if (Quick::config()->main->store->useBackendSsl &&
-            substr($url, 0, strlen('https://')) != 'https://') {
-
-            parent::_redirect('https://' . substr($url, strlen('http://')));
-            die();
-        }
         $this->auth();
-        $this->checkPermission();*/
+        //$this->checkPermission();*/
     }
 
     public function auth()
     {
         if (!$this->_disableAuth) {
             if (!Zend_Auth::getInstance()->hasIdentity()) {
-                if ($this->getRequest()->isXmlHttpRequest()) {
+                /*if ($this->getRequest()->isXmlHttpRequest()) {
                     Quick::message()->addError('Your session has been expired. Please relogin');
 
                     $this->_helper->json->sendFailure();
 
                     die();
                     // Zend_Controller_Action_Helper_Json if $suppressExit = true;
-                }
-                $this->_forward('index', 'auth', 'Quick_Admin');
+                }*/
+                $this->_forward('index', 'auth', 'Quick_Core');
             } elseif (!Quick::single('admin/user')->find(
                     Zend_Auth::getInstance()->getIdentity())->current()) {
                 $this->view->action('logout', 'auth', 'Quick_Admin');

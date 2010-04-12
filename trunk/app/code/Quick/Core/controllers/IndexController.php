@@ -10,7 +10,7 @@ class IndexController extends Quick_Core_Controller_Back
 {
 	public function init()
     {
-        parent::init();        
+    	parent::init();        
     }
     
     public function indexAction()
