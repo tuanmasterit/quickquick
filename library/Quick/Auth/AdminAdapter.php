@@ -36,10 +36,27 @@ class Quick_Auth_AdminAdapter implements Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
-        $row = Quick::single('admin/user')->fetchRow(
+        $row = Quick::single('general/user')->fetchRow(
             Quick::db()->quoteInto("username = ?", $this->_username)
         );
         
-        echo "dd";
+    	if (!$row) {
+            $code = Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND;
+            Quick::message()->addError('Such user does not exists');
+            return new Zend_Auth_Result($code, null);
+        }
+        
+    	if ($row->password != md5($this->_password)) {
+            $code = Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID;
+            Quick::message()->addError('Wrong password');
+            return new Zend_Auth_Result($code, null);
+        }
+        
+        $code = Zend_Auth_Result::SUCCESS;
+        // luu tru khi dang nhap thanh cong, thoi gian dang nhap
+        //$row->lastlogin = Ecart_Date::now()->toZendDbExpr();
+        //$row->save();
+        
+        return new Zend_Auth_Result($code, $row->id);
     }
 }

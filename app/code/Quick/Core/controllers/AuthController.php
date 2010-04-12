@@ -33,5 +33,21 @@ class AuthController extends Quick_Core_Controller_Back
     	$authAdapter = new Quick_Auth_AdminAdapter($username, $password);
     	
     	$result = $auth->authenticate($authAdapter);
+    	
+    	if (!$result->isValid()) {
+            Quick::dispatch('admin_user_login_failed', array('username' => $username));
+            $this->_redirect($_SERVER['HTTP_REFERER']);
+        } else {
+            Quick::dispatch('admin_user_login_success', array('username' => $username));
+            Quick::session()->roleId = Quick::single('general/user')->getRole($result->getIdentity());
+            $this->_redirect($_SERVER['HTTP_REFERER']);
+        }
+    }
+    
+	public function logoutAction()
+    {
+        Zend_Auth::getInstance()->clearIdentity();
+        unset(Quick::session()->roleId);
+        $this->_redirect('auth');
     }
 }

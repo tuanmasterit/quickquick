@@ -9,6 +9,15 @@ $config = array(
         'package' => 'Quick_Core',
         'name' => 'Core',
         'version' => '0.1',
-        'required' => 1
+        'required' => 1 /*, // goi ham tu dong khi co su kien xay ra
+		'events' => array(
+            'core_event' => array(
+                'notify' => array(
+                    'type' => 'model',
+                    'model' => 'core/module',
+                    'method' => 'testStock'
+                )
+            )
+        )*/
     )
 );

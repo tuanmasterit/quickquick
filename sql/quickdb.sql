@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.1.3.1
+-- version 3.2.0.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2010 at 06:14 PM
--- Server version: 5.1.33
--- PHP Version: 5.2.9
+-- Generation Time: Apr 12, 2010 at 10:40 AM
+-- Server version: 5.1.37
+-- PHP Version: 5.3.0
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `admin_acl_role` (
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `role_name` varchar(128) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
 -- Dumping data for table `admin_acl_role`
@@ -63,7 +63,62 @@ INSERT INTO `admin_acl_role` (`id`, `sort_order`, `role_name`) VALUES
 (2, 0, 'Accountant'),
 (3, 0, 'Saler'),
 (4, 0, 'Purchaser'),
-(5, 0, 'Storekeeper');
+(5, 0, 'Storekeeper'),
+(6, 0, 'Saler 1'),
+(7, 0, 'Saler 2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_acl_role_parent`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_acl_role_parent` (
+  `role_id` mediumint(8) unsigned NOT NULL,
+  `role_parent_id` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`role_id`),
+  KEY `fk_role_id` (`role_id`),
+  KEY `fk_role_parent_id` (`role_parent_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+
+--
+-- Dumping data for table `admin_acl_role_parent`
+--
+
+INSERT INTO `admin_acl_role_parent` (`role_id`, `role_parent_id`) VALUES
+(6, 3),
+(7, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_user`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_user` (
+  `id` mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
+  `role_id` mediumint(8) unsigned DEFAULT NULL,
+  `firstname` varchar(32) NOT NULL,
+  `lastname` varchar(32) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `username` varchar(40) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `lastlogin` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `lognum` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `reload_acl_flag` tinyint(1) unsigned NOT NULL DEFAULT '0',
+  `is_active` tinyint(1) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `i_admin_user_role_id` (`role_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `admin_user`
+--
+
+INSERT INTO `admin_user` (`id`, `role_id`, `firstname`, `lastname`, `email`, `username`, `password`, `created`, `modified`, `lastlogin`, `lognum`, `reload_acl_flag`, `is_active`) VALUES
+(1, 6, 'admin', 'admin', 'ecartcommerce@example.com', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +292,18 @@ INSERT INTO `locale_language` (`id`, `code`, `language`, `locale`) VALUES
 --
 
 --
+-- Constraints for table `admin_acl_role_parent`
+--
+ALTER TABLE `admin_acl_role_parent`
+  ADD CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `admin_acl_role` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_role_parent_id` FOREIGN KEY (`role_parent_id`) REFERENCES `admin_acl_role` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `core_config_value`
 --
 ALTER TABLE `core_config_value`
   ADD CONSTRAINT `FK_config_field_id` FOREIGN KEY (`config_field_id`) REFERENCES `core_config_field` (`id`) ON DELETE CASCADE;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
