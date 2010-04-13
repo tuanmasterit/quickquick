@@ -40,7 +40,7 @@ class Quick_Translate
     public function __construct($module = 'Quick_Core')
     {
         $this->_locale = Quick_Locale::getLocale()->toString();
-        self::$_module = $module;   
+        self::$_module = $module;
     	if (!Quick::config()->translation->main->autodetect) {
              Zend_Translate::setCache(Quick::cache());
         }   
@@ -54,7 +54,7 @@ class Quick_Translate
      * @return Quick_Translate
      */
     public static function getInstance($module = 'Quick_Core')
-    {    	
+    {
         if (null === self::$_instance) {
             self::$_instance = new self($module);
         } elseif (self::$_module !== $module) {
@@ -70,38 +70,6 @@ class Quick_Translate
     }
     
 	/**
-     * Return instance of Zend_Translate_Adapter
-     *
-     * @param string $module
-     * @return Zend_Translate_Adapter|null
-     */
-    public function getTranslator($module = null)
-    {
-        if (null === $module) {
-            $module = self::$_module;
-        }
-        if (!isset(self::$_translators[$module])
-           ||(!self::$_translators[$module] instanceof Zend_Translate)) {
-           	
-            $filename = $this->_getFileName($this->_locale, $module);
-            
-            if (!is_readable($filename)) {
-                return null;
-            }
-
-            $translator = new Zend_Translate(
-                'csv',
-                $filename,
-                $this->_locale,
-                array('delimiter' => ',')
-            );
-            self::$_translators[$module] = $translator;
-        }
-
-        return self::$_translators[$module];
-    }
-    
-	/**
      *
      * @param array $args
      * @return string
@@ -109,18 +77,11 @@ class Quick_Translate
     public function translate(array $args)
     {
         $text = array_shift($args);
-
-        if (null === $this->getTranslator()) {
-            return @vsprintf($text, $args);
-        }
         
-        if (!count($args)) {        	
-            return $this->getTranslator()->_($text, $this->_locale);
+        if (!count($args)) {
+        	return Quick::single('core/module_language')->getTranslatedValue(self::$_module, $this->_locale, $text);
         }
-        return @vsprintf(
-            $this->getTranslator()->_($text, $this->_locale),
-            $args
-        );
+        return null;        
     }
     
 	/**
