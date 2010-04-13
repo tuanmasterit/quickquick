@@ -15,9 +15,8 @@ class IndexController extends Quick_Core_Controller_Back
     
     public function indexAction()
     {
-        //$this->view->pageTitle = Ecart::translate('admin')->__('Home');
-        $this->view->pageTitle = 'Home';
-        
+        $this->view->pageTitle = Quick::translate('Core')->__('Home');
+                
         $this->render();
     }
 }

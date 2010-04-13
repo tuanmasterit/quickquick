@@ -7,7 +7,7 @@
  */
 class Quick_Locale
 {
-    const DEFAULT_LOCALE    = 'en_US';
+    const DEFAULT_LOCALE    = 'vi_VN';
     const DEFAULT_CURRENCY  = 'USD';
     const DEFAULT_TIMEZONE  = 'America/Los_Angeles';
     const DEFAULT_LOCALENAME  = 'English';
@@ -21,7 +21,8 @@ class Quick_Locale
     public static function getDefaultLocale()
     {
     	// access database for multi locale
-        return self::DEFAULT_LOCALE;
+        return empty(Quick::config()->main->store->locale) ? 
+           self::DEFAULT_LOCALE : Quick::config()->main->store->locale;
     }
     
 	/**
@@ -35,7 +36,7 @@ class Quick_Locale
         if (!$installedOnly) {
             return array_keys(Zend_Locale::getLocaleList());
         }
-        //return Quick::single('locale/language')->getLocaleList(); // Multi language
+        return Quick::single('core/language')->getLocaleList();
     }
     
 	/**
@@ -79,6 +80,8 @@ class Quick_Locale
         if (!strstr($locale, '_')) {
             $locale = self::_getLocaleFromLanguageCode();
         }
+        
+        
 
         if (Zend_Registry::isRegistered('Zend_Locale')) {
             $currentLocale = Zend_Registry::get('Zend_Locale');
@@ -100,7 +103,27 @@ class Quick_Locale
         self::setTimezone();
     }
     
-/**
+	/**
+     * Retrieve locale object
+     *
+     * @static
+     * @return Zend_Locale
+     */
+    public static function getLocale()
+    {
+        if (!Zend_Registry::isRegistered('Zend_Locale')) {
+            if (Zend_Registry::get('app') == 'admin' 
+                && isset(Quick::session()->locale)) {
+
+                self::setLocale(Quick::session()->locale);
+            } else {
+                self::setLocale(Quick::config()->main->store->locale);
+            }
+        }
+        return Zend_Registry::get('Zend_Locale');
+    }
+    
+	/**
      * Retrieve first suitable locale with language
      *
      * @static

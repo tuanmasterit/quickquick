@@ -278,6 +278,23 @@ class Quick
     
 	/**
      *
+     * @param string $module
+     * @return Quick_Translate
+     */
+    public static function translate($module = 'Quick_Core')
+    {
+        if (false === strpos($module, '_')) {
+            $module = 'Quick_' . $module;
+        }
+        $module = str_replace(
+            ' ', '_', ucwords(str_replace('_', ' ', $module))
+        );
+
+        return Quick_Translate::getInstance($module);
+    }
+    
+	/**
+     *
      * @param 	string $value
      * @return	echo array
      */

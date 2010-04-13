@@ -173,8 +173,8 @@ class Quick_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $this->bootstrap('Cache');
         $defaultLocale = Quick_Locale::getDefaultLocale();
-        $locales = Quick_Locale::getLocaleList();
-
+        $locales = Quick_Locale::getLocaleList(true);
+        
         //set default timezone affect on date() and Quick_Date
         Quick_Locale::setTimezone(Quick_Locale::getDefaultTimezone());
         // pre router config

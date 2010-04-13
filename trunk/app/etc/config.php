@@ -2,8 +2,8 @@
 
 $config = array(
     'system' => array(
-        'path'		=> 'D:/ProgramFile/xampp/htdocs/quick',
-        'baseurl' 	=> 'http://localhost/quick',
+        'path'		=> 'D:/program/xampp/htdocs/quickquick',
+        'baseurl' 	=> 'http://localhost/quickquick',
 		'namesite'	=> 'Quick Quick - ERP',
 		'adminurl'	=> '/'
         ),
