@@ -26,7 +26,15 @@
         ?>
     </head>
     <body>
-		<p>Hello ERP</p>
+		<p>Quick Quick ERP</p>
+		<a href="<?php echo $this->href('auth/logout');?>">Log out</a>&nbsp;|&nbsp;
+		<a href="<?php echo $this->href('language/change/new_locale/vi_VN')?>" id="logovi">
+        	<?php echo $this->image('Vietnam-Flag-icon.png'); ?>
+        </a>&nbsp;|&nbsp;
+		<a href="<?php echo $this->href('language/change/new_locale/en_US')?>" id="logoen">
+        	<?php echo $this->image('United-States-Flag-icon.png'); ?>
+        </a>
+		<p></p>
 		<?php echo $this->layout()->content;?>
     </body>
 </html>
