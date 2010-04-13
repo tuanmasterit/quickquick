@@ -50,11 +50,12 @@ class Quick_Core_Model_Acl extends Zend_Acl
         $this->addRoleRecursive($role);
         $rolesForLoad = $this->_table->getAllParents($roleId);
         $rolesForLoad[] = $roleId;
-        $where = $this->_table->getAdapter()->quoteInto('role_id IN(?)', $rolesForLoad);
-        
+        $where = $this->_table->getAdapter()->quoteInto('role_id IN(?)', $rolesForLoad);        
+
         $result = $this->_table->getAdapter()->query(
-            "SELECT * FROM " . $this->_table->getPrefix() . "admin_acl_rule WHERE $where"
+            "SELECT * FROM admin_acl_rule WHERE $where"
         );
+
         while (($row = $result->fetch())) {
             if ($row['permission'] == 'allow') {
                 $this->allow($row['role_id'], $row['resource_id']);

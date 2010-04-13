@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.0.1
+-- version 3.1.3.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 12, 2010 at 10:40 AM
--- Server version: 5.1.37
--- PHP Version: 5.3.0
+-- Generation Time: Apr 13, 2010 at 06:24 PM
+-- Server version: 5.1.33
+-- PHP Version: 5.2.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `admin_acl_resource` (
   `resource_id` varchar(64) NOT NULL,
   `title` varchar(64) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `admin_acl_resource`
@@ -39,7 +39,8 @@ CREATE TABLE IF NOT EXISTS `admin_acl_resource` (
 INSERT INTO `admin_acl_resource` (`id`, `resource_id`, `title`) VALUES
 (1, 'sale', 'Sale System'),
 (2, 'sale/transaction', 'Sale - Transaction'),
-(3, 'sale/transaction/add-order', 'Sale - Add New Order');
+(3, 'sale/transaction/add-order', 'Sale - Add New Order'),
+(4, 'core', 'Core System');
 
 -- --------------------------------------------------------
 
@@ -92,6 +93,33 @@ INSERT INTO `admin_acl_role_parent` (`role_id`, `role_parent_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin_acl_rule`
+--
+
+CREATE TABLE IF NOT EXISTS `admin_acl_rule` (
+  `role_id` mediumint(8) unsigned NOT NULL,
+  `resource_id` varchar(128) NOT NULL,
+  `permission` enum('allow','deny') NOT NULL,
+  PRIMARY KEY (`role_id`,`resource_id`),
+  KEY `resource` (`resource_id`),
+  KEY `i_acl_rule_id` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+--
+-- Dumping data for table `admin_acl_rule`
+--
+
+INSERT INTO `admin_acl_rule` (`role_id`, `resource_id`, `permission`) VALUES
+(1, 'core', 'allow'),
+(1, 'sale', 'allow'),
+(3, 'sale', 'allow'),
+(4, 'sale', 'allow'),
+(4, 'sale/transaction', 'deny'),
+(4, 'sale/transaction/add-order', 'deny');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `admin_user`
 --
 
@@ -118,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `admin_user` (
 --
 
 INSERT INTO `admin_user` (`id`, `role_id`, `firstname`, `lastname`, `email`, `username`, `password`, `created`, `modified`, `lastlogin`, `lognum`, `reload_acl_flag`, `is_active`) VALUES
-(1, 6, 'admin', 'admin', 'ecartcommerce@example.com', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, 1);
+(1, 1, 'admin', 'admin', 'ecartcommerce@example.com', 'admin', 'e10adc3949ba59abbe56e057f20f883e', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -225,7 +253,7 @@ INSERT INTO `core_config_value` (`id`, `config_field_id`, `path`, `site_id`, `va
 (7, 9, 'main/store/currency', 0, 'USD'),
 (8, 10, 'main/store/zip', 0, '10001'),
 (9, 11, 'main/store/owner', 0, 'minh trung phan'),
-(10, 12, 'main/store/locale', 0, 'en_US'),
+(10, 12, 'main/store/locale', 0, 'vi_VN'),
 (11, 13, 'main/store/timezone', 0, 'Australia/Darwin'),
 (12, 14, 'sale/main/saleRoute', 0, 'sale'),
 (13, 15, 'design/main/frontTemplateId', 0, '1'),
@@ -234,6 +262,29 @@ INSERT INTO `core_config_value` (`id`, `config_field_id`, `path`, `site_id`, `va
 (16, 20, 'translation/main/autodetect', 0, '0'),
 (17, 21, 'general/main/generalRoute', 0, 'general'),
 (18, 22, 'auth/main/authRoute', 0, 'auth');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `core_language`
+--
+
+CREATE TABLE IF NOT EXISTS `core_language` (
+  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  `code` varchar(3) NOT NULL,
+  `language` varchar(128) NOT NULL,
+  `locale` varchar(5) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `Index_code` (`code`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `core_language`
+--
+
+INSERT INTO `core_language` (`id`, `code`, `language`, `locale`) VALUES
+(1, 'en', 'English', 'en_US'),
+(2, 'vi', 'Việt Nam', 'vi_VN');
 
 -- --------------------------------------------------------
 
@@ -265,27 +316,26 @@ INSERT INTO `core_module` (`id`, `package`, `code`, `name`, `version`, `is_activ
 -- --------------------------------------------------------
 
 --
--- Table structure for table `locale_language`
+-- Table structure for table `core_module_language`
 --
 
-CREATE TABLE IF NOT EXISTS `locale_language` (
-  `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(3) NOT NULL,
-  `language` varchar(128) NOT NULL,
-  `locale` varchar(5) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `Index_code` (`code`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC AUTO_INCREMENT=5 ;
+CREATE TABLE IF NOT EXISTS `core_module_language` (
+  `module_id` int(10) unsigned NOT NULL,
+  `language_id` smallint(5) unsigned NOT NULL,
+  `key` varchar(255) NOT NULL,
+  `value` text NOT NULL,
+  PRIMARY KEY (`module_id`,`language_id`,`key`),
+  KEY `fk_module_id` (`module_id`),
+  KEY `fk_language_id` (`language_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
 
 --
--- Dumping data for table `locale_language`
+-- Dumping data for table `core_module_language`
 --
 
-INSERT INTO `locale_language` (`id`, `code`, `language`, `locale`) VALUES
-(1, 'en', 'English', 'en_US'),
-(2, 'en', 'English', 'en_US'),
-(3, 'en', 'English', 'en_US'),
-(4, 'en', 'English', 'en_US');
+INSERT INTO `core_module_language` (`module_id`, `language_id`, `key`, `value`) VALUES
+(1, 1, 'Home', 'Home'),
+(1, 2, 'Home', 'Trang Chủ');
 
 --
 -- Constraints for dumped tables
@@ -299,11 +349,20 @@ ALTER TABLE `admin_acl_role_parent`
   ADD CONSTRAINT `fk_role_parent_id` FOREIGN KEY (`role_parent_id`) REFERENCES `admin_acl_role` (`id`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `admin_acl_rule`
+--
+ALTER TABLE `admin_acl_rule`
+  ADD CONSTRAINT `fk_acl_role_id` FOREIGN KEY (`role_id`) REFERENCES `admin_acl_role` (`id`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `core_config_value`
 --
 ALTER TABLE `core_config_value`
   ADD CONSTRAINT `FK_config_field_id` FOREIGN KEY (`config_field_id`) REFERENCES `core_config_field` (`id`) ON DELETE CASCADE;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+--
+-- Constraints for table `core_module_language`
+--
+ALTER TABLE `core_module_language`
+  ADD CONSTRAINT `fk_language_id` FOREIGN KEY (`language_id`) REFERENCES `core_language` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_module_id` FOREIGN KEY (`module_id`) REFERENCES `core_module` (`id`) ON DELETE CASCADE;

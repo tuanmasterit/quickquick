@@ -45,7 +45,7 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
     public function preDispatch()
     {
         $this->auth();
-        //$this->checkPermission();*/
+        $this->checkPermission();
     }
 
     public function auth()
@@ -74,10 +74,14 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
         $request = $this->getRequest();
         
         $action = $request->getActionName();
-        //$controller = str_replace('_', '/', $request->getControllerName());
+        list($category, $module) = explode(
+                '_', strtolower($request->getModuleName()), 2
+			);        
         $controller = $request->getControllerName();
-        $role = Quick::session()->roleId;
-        $resourceIds = explode('/', "admin/$controller/$action");
+        $role = Quick::session()->roleId;        
+        
+        $resourceIds = explode('/', "$module/$controller/$action");
+                
         // admin is the name of parent resource_id
 
         while (count($resourceIds)) {
@@ -100,7 +104,7 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
             die(); // Zend_Controller_Action_Helper_Json if $suppressExit = true;
         }
         
-        $this->_forward('access-denied', 'informer', 'Quick_Admin');
+        $this->_forward('access-denied', 'informer', 'Quick_Core');
         return false;
     }
     
