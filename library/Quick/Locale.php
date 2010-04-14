@@ -81,8 +81,6 @@ class Quick_Locale
             $locale = self::_getLocaleFromLanguageCode();
         }
         
-        
-
         if (Zend_Registry::isRegistered('Zend_Locale')) {
             $currentLocale = Zend_Registry::get('Zend_Locale');
             $currentLocale->setLocale($locale);
@@ -94,8 +92,7 @@ class Quick_Locale
             }
             Zend_Locale::setCache(Quick::cache());
             Zend_Registry::set('Zend_Locale', $currentLocale);
-        }
-        
+        }       
         if (Zend_Registry::isRegistered('app') && Zend_Registry::get('app') == 'admin') {
             $nsMain->locale = $locale;
         }    
