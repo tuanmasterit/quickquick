@@ -48,6 +48,6 @@ class AuthController extends Quick_Core_Controller_Back
     {
         Zend_Auth::getInstance()->clearIdentity();
         unset(Quick::session()->roleId);
-        $this->_redirect('auth');
+        $this->_redirect(Quick::config()->system->adminurl);
     }
 }

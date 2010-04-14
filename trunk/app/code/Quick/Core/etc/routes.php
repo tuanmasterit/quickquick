@@ -21,3 +21,21 @@ $router->addRoute('core_auth', new Quick_Controller_Router_Route(
         'action' => 'index'
     )
 ));
+
+$router->addRoute('core_language', new Quick_Controller_Router_Route(
+    Quick::config()->language->main->languageRoute . '/:action/*',
+    array(
+        'module' => 'Quick_Core',
+        'controller' => 'language',
+        'action' => 'change'
+    )
+));
+
+$router->addRoute('core_test', new Quick_Controller_Router_Route(
+    'test/:action/*',
+    array(
+        'module' => 'Quick_Core',
+        'controller' => 'index',
+        'action' => 'test'
+    )
+));
