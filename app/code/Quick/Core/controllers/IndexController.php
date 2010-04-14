@@ -19,4 +19,11 @@ class IndexController extends Quick_Core_Controller_Back
                 
         $this->render();
     }
+    
+	public function testAction()
+    {
+        $this->view->pageTitle = 'test';
+    
+        $this->render();
+    }
 }

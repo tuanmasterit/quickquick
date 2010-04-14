@@ -6,7 +6,7 @@
  * @subpackage  Controller
  * @author      trungpm
  */
-class LanguageController extends Quick_Admin_Controller_Back
+class LanguageController extends Quick_Core_Controller_Back
 {
     public function init()
     {
@@ -19,8 +19,8 @@ class LanguageController extends Quick_Admin_Controller_Back
      */
     public function changeAction()
     {
+    	$this->_helper->layout->disableLayout();
         $locale = $this->_getParam('new_locale');
-        echo $locale;
         if ($locale) {
             Quick_Locale::setLocale($locale);
         }
