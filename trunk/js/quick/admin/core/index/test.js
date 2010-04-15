@@ -1,5 +1,13 @@
 Ext.onReady(function(){
 	
+	var record = [
+        {name: 'code', type: 'string'},
+        {name: 'name', type: 'string'},
+        {name: 'address', type: 'string'}
+    ];
+	
+    var test_object = Ext.data.Record.create(record);
+	
 	var columns = [];
 	var sm = new Ext.grid.CheckboxSelectionModel();
 	columns.push(sm);
@@ -9,16 +17,16 @@ Ext.onReady(function(){
 		width: 40,
         menuDisabled: true
 	}, {
-		header: 'Name'.translator(),
-        dataIndex: 'name',
+		header: 'Language'.translator(),
+        dataIndex: 'language',
         menuDisabled: true,
         editor: new Ext.form.TextField({
             allowBlank: false,
             maxLength: 128
         })
 	}, {
-		header: 'Address'.translator(),
-        dataIndex: 'address',
+		header: 'Locale'.translator(),
+        dataIndex: 'locale',
         menuDisabled: true,
         editor: new Ext.form.TextField({
             allowBlank: false,
@@ -28,20 +36,37 @@ Ext.onReady(function(){
 	var cm = new Ext.grid.ColumnModel(columns);
 	cm.defaultSortable = true;
 	
+	var ds = new Ext.data.Store({
+		reader: new Ext.data.JsonReader({
+            root : 'data',
+            totalProperty: 'count',
+            id: 'code',
+			fields: ['code', 'language', 'locale']
+        }),
+        proxy: new Ext.data.HttpProxy({
+            url: Quick.baseUrl + Quick.adminUrl + 'test/list'
+        }),
+        autoLoad: false,
+        remoteSort: true		
+    });
+	
     var grid = new Ext.grid.EditorGridPanel({
 		cm: cm,
         sm: sm,
         id: 'grid',
+		title: 'test',
         enableColumnMove: false,
-        height: 550,
+        height: 300,
+		width: 908,
         renderTo: 'test-grid',
+		store: ds,
         clicksToEdit: 1,
-		viewConfig: {
-            forceFit: true,
-            deferEmptyText: true,
-            emptyText: 'No records found'.translator()
-        }
-	})
+		loadMask: true,
+        trackMouseOver: true,
+        frame: true,
+	});
 	
 	Ext.getCmp('grid').store.load();
+	
+	Ext.QuickTips.init();
 });

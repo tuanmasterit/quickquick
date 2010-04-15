@@ -20,4 +20,16 @@ class Quick_Core_Model_Language extends Quick_Db_Table
         }
         return $this->_localeList;
     }
+    
+	/**
+     * Get list of manufacturers on all available languages
+     * @return array
+     */
+    public function getAllList()
+    {
+        return $this->getAdapter()->fetchAll("
+            SELECT lg.* 
+            FROM " . $this->_name . " AS lg
+        ");
+    }
 }
