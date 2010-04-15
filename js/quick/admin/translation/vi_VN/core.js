@@ -6,5 +6,7 @@ Locale.module('core', {
 	'Address': 'Địa chỉ',
 	'Taxcode': 'Mã số thuế',
 	'Contactperson': 'Liên hệ',
-	'No records found': 'Không tìm thấy mẫu tin nào'
+	'No records found': 'Không tìm thấy mẫu tin nào',
+	'Language': 'Ngôn ngữ',
+	'Locale': 'Mã ngôn ngữ'
 });

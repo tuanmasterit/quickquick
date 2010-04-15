@@ -6,5 +6,7 @@ Locale.module('core', {
 	'Address': 'Address',
 	'Taxcode': 'Taxcode',
 	'Contactperson': 'Contactperson',
-	'No records found': 'No records found'
+	'No records found': 'No records found',
+	'Language': 'Language',
+	'Locale': 'Locale'
 });
