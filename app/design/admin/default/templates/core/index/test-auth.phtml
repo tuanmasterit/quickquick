@@ -1,7 +1,16 @@
+<script type="text/javascript">
+	var Roles = {    	
+        roleValue: <?php echo Zend_Json_Encoder::encode($this->roles) ?>
+    };
+</script>
 <?php
 $this->headScript()
-    ->appendFile('js/quick/admin/core/index/test.js'); 
+->appendFile('js/quick/admin/core/index/test-auth.js');
 ?>
 <table cellpadding="0" cellspacing="0" width="100%" id="core-index-test">
-    <tr><td><div id="test-grid"></div></td></tr>
+	<tr>
+		<td>
+		<div id="test-grid"></div>
+		</td>
+	</tr>
 </table>

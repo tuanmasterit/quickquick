@@ -122,7 +122,7 @@ class Quick_View_Helper_HeadScript extends Zend_View_Helper_HeadScript
                 
                 $html .= ' src="' . $this->view->baseUrl . '/' . implode(',', $srcs) . '"';
             }
-            
+
             $this->_completeItem($html, $item, $indent, $escapeStart, $escapeEnd);
         }
         
@@ -157,7 +157,7 @@ class Quick_View_Helper_HeadScript extends Zend_View_Helper_HeadScript
             $html .= PHP_EOL . $indent . '    ' . $escapeStart . PHP_EOL . $item->source . $indent . '    ' . $escapeEnd . PHP_EOL . $indent;
         }
         $html .= '</script>';
-        
+
         if (isset($item->attributes['conditional'])
             && !empty($item->attributes['conditional'])
             && is_string($item->attributes['conditional'])) {
