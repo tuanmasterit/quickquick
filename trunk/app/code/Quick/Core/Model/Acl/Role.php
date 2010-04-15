@@ -8,7 +8,7 @@
  */
 class Quick_Core_Model_Acl_Role extends Quick_Db_Table
 {
-	protected $_name = 'admin_acl_role';
+	protected $_name = 'core_acl_role';
 	protected $_rolesTree = null;
 	
 	private function _initTree()
@@ -62,5 +62,13 @@ class Quick_Core_Model_Acl_Role extends Quick_Db_Table
     {
         $this->_initTree();
         return $this->_rolesTree;
+    }
+    
+	public function getRoles()
+    {
+        return $this->getAdapter()->fetchAll("
+            SELECT cr.role_name  
+            FROM " . $this->_name . " AS cr
+        ");
     }
 }

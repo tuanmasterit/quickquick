@@ -13,18 +13,13 @@ class Quick_Core_Model_Acl_Resource extends Quick_Db_Table
 	public function getResources(){
 		$select = $this->getAdapter()->select();
 		$select->from(
-					array('cml' => $this->_name), 
-					array('cml.key', 'cml.value'))
+					array('cr' => $this->_name), 
+					array('cr.resource_id', 'cr.title_key'))
 				->joinLeft(
 					array('cm' => 'core_module'), 
-					"cm.id = cml.module_id", 
-					array('package'))
-				->joinLeft(
-					array('cl' => 'core_language'), 
-					"cl.id = cml.language_id", 
-					array('locale'))
-				->where('cm.package = ?', $module)
-				->where('cl.locale = ?', $locale)
-				->where('cml.key = ?', $key);
+					"cm.id = cr.module_id", 
+					array('cm.package'))
+				->order('cm.package');
+		return $this->getAdapter()->fetchAll($select->__toString());
 	}
 }

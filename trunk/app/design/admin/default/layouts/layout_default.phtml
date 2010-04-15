@@ -26,11 +26,11 @@
 	        ->appendStylesheet('js/extjs/resources/css/ext-all.css');
 	        
 			$this->headScript()
-			->setUseProxy(Quick::config(Quick::config()->developer->enable_proxy, true))
-            ->appendFile('js/jquery/jquery-1.4.min.js')                  
-            ->appendFile('js/extjs/adapter/ext/ext-base.js')           
-            ->appendFile('js/extjs/ext-all.js')
-            ->appendFile('js/quick/admin/core/translate.js');	
+			->setUseProxy(Quick::config(Quick::config()->developer->enable_proxy, true));
+            $this->headScript()->offsetSetFile(-100, 'js/jquery/jquery-1.4.min.js');                  
+            $this->headScript()->offsetSetFile(-99, 'js/extjs/adapter/ext/ext-base.js');           
+            $this->headScript()->offsetSetFile(-98, 'js/extjs/ext-all.js');
+            $this->headScript()->offsetSetFile(-97, 'js/quick/admin/core/translate.js');	
 
             $locale = Quick_Locale::getLocale()->toString();
             $this->headScript()
