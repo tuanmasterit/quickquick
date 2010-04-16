@@ -58,7 +58,7 @@ class IndexController extends Quick_Core_Controller_Back
         $i = 0;
     	foreach ($resources as $resource) {
     		foreach ($roles as $role) {
-    			$resources[$i][$role['role_name']] = "false";
+    			$resources[$i][$role['role_name']] = "0";
     		}
     		$i++;
         }
@@ -67,7 +67,7 @@ class IndexController extends Quick_Core_Controller_Back
     	foreach ($resources as $resource) {
     		foreach ($rules as $rule) {
     			if (($resource['resource_id'] == $rule['resource_id']) && ($rule['permission'] == 'allow'))
-    				$resources[$i][$rule['role_name']] = "true";
+    				$resources[$i][$rule['role_name']] = "1";
     		}
     		$i++;
         }

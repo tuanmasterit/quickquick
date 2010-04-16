@@ -19,7 +19,8 @@ class Quick_Core_Model_Acl_Resource extends Quick_Db_Table
 					array('cm' => 'core_module'), 
 					"cm.id = cr.module_id", 
 					array('cm.package'))
-				->order('cm.package');
+				->order('cm.package')
+				->order('cr.resource_id');
 		return $this->getAdapter()->fetchAll($select->__toString());
 	}
 }

@@ -46,8 +46,8 @@ Ext.onReady(function(){
         proxy: new Ext.data.HttpProxy({
             url: Quick.baseUrl + Quick.adminUrl + 'test/list'
         }),
-        autoLoad: false,
-        remoteSort: true		
+        autoLoad: true,
+        remoteSort: true
     });
 	
     var grid = new Ext.grid.EditorGridPanel({
@@ -57,7 +57,7 @@ Ext.onReady(function(){
 		title: 'test',
         enableColumnMove: false,
         height: 300,
-		width: 908,
+		width: 200,
         renderTo: 'test-grid',
 		store: ds,
         clicksToEdit: 1,
