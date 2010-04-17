@@ -81,4 +81,41 @@ class IndexController extends Quick_Core_Controller_Back
             'data' => array_values($result)
         ));
     }
+    
+	public function editRoleAction()
+    {
+        $this->view->pageTitle = 'edit-role';
+    	
+        $this->render();
+    }
+    
+	public function getRulesOfResourceAction()
+    {
+        $result = array();
+        $resources = Quick::single('core/acl_rule')->getRulesOfResource($_POST['selectedFunction']);
+        
+    	foreach ($resources as $resource) {
+            $result[] = $resource;            
+        }
+    	return $this->_helper->json->sendSuccess(array(
+            'data' => array_values($result)
+        ));
+    }
+    
+	public function newRoleAction()
+    {
+    	$result = array();
+    	$this->layout->disableLayout();
+        if ($this->_hasParam('role')) {
+            $role = $this->_getParam('role');
+            $result[] = Quick::single('core/acl_role')->save(array('id'=>-1, 'role_name'=>$role));
+        } else {
+            Quick::message()->addError('Invalid parameter recieved. ProductId is required');
+            return $this->_helper->json->sendFailure();
+        }
+        
+        $this->_helper->json->sendSuccess(array(
+            'data' => array_values($result)
+        ));
+    }
 }

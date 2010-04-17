@@ -53,12 +53,12 @@ Ext.onReady(function(){
     var grid = new Ext.grid.EditorGridPanel({
 		cm: cm,
         sm: sm,
-        id: 'grid',
+        id: 'grid1',
 		title: 'test',
         enableColumnMove: false,
         height: 300,
 		width: 200,
-        renderTo: 'test-grid',
+        renderTo: 'test-grid1',
 		store: ds,
         clicksToEdit: 1,
 		loadMask: true,
@@ -66,7 +66,7 @@ Ext.onReady(function(){
         frame: true,
 	});
 	
-	Ext.getCmp('grid').store.load();
+	Ext.getCmp('grid1').store.load();
 	
 	Ext.QuickTips.init();
 });

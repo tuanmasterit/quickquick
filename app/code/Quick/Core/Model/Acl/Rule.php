@@ -34,4 +34,18 @@ class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 					array('crl.role_name'));
 		return $this->getAdapter()->fetchAll($select->__toString());
 	}
+	
+	public function getRulesOfResource($resourceId){
+		$select = $this->getAdapter()->select();
+		$select->from(
+					array('cr' => $this->_name), 
+					array('cr.resource_id', 'cr.is_read', 'cr.is_add', 'cr.is_modify', 
+					'cr.is_change', 'cr.is_delete', 'cr.is_print', 'cr.is_list'))
+				->joinLeft(
+					array('crole' => 'core_acl_role'), 
+					"crole.id  = cr.role_id", 
+					array('crole.role_name'))
+				->where('cr.resource_id = ?', $resourceId);
+		return $this->getAdapter()->fetchAll($select->__toString());
+	}
 }
