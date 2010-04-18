@@ -67,7 +67,7 @@ class Quick_Core_Model_Acl_Role extends Quick_Db_Table
 	public function getRoles()
 	{
 		return $this->getAdapter()->fetchAll("
-            SELECT cr.role_name  
+            SELECT cr.id, cr.role_name  
             FROM " . $this->_name . " AS cr
         ");
 	}
