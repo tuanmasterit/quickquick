@@ -58,9 +58,14 @@ Ext.onReady(function(){
                     url: Quick.baseUrl + Quick.adminUrl + 'test/new-role/role/' + roleName + '/',
                     method: 'get',
                     success: function(result, options){
-                    
+                        var result = Ext.decode(result.responseText);
+                        Roles.roleValue.push({
+                            'id': result.data[0],
+                            'role_name': roleName
+                        })
+                        
                         Ext.getCmp('grid').store.load();
-						var cm = Ext.getCmp('grid').getColumnModel();
+                        var cm = Ext.getCmp('grid').getColumnModel();
                         cm.config.push({
                             id: roleName,
                             header: roleName,
@@ -68,18 +73,21 @@ Ext.onReady(function(){
                             width: 90,
                             renderer: render_permision,
                             editor: new fm.ComboBox({
+                                xtype: 'combo',
                                 store: storePermision,
-                                displayField: 'value',
+                                displayField: 'name',
                                 valueField: 'id',
-                                emptyText: 'Select a permision...',
+                                //emptyText: 'Select a permision...',
                                 typeAhead: true,
                                 lazyRender: true,
+                                selectOnFocus: true,
+                                forceSelection: true,
                                 mode: 'local'
                             })
                         });
                         
                         Ext.getCmp('grid').reconfigure(grid.getStore(), new Ext.grid.ColumnModel(cm));
-
+                        
                         //var data = Ext.decode(result.responseText);
                         //reload();
                     },
@@ -183,19 +191,16 @@ Ext.onReady(function(){
         //groupField:'package'
     });
     
-    var myPermision = [['0', 'deny'], ['1', 'allow']];
-    var storePermision = new Ext.data.ArrayStore({
-        fields: [{
-            name: 'id',
-            type: 'string'
-        }, {
-            name: 'value',
-            type: 'string'
-        }]
+    var storePermision = new Ext.data.SimpleStore({
+        fields: ["id", "name"],
+        data: [["allow", "allow"], ["deny", "deny"]]
     });
-    storePermision.loadData(myPermision);
+    
     function render_permision(value){
-    	return (value == '0') ? '' : 'allow';        
+        if (value == "deny") {
+            return "";
+        }
+        return value;
     }
     
     var columns = [];
@@ -220,15 +225,18 @@ Ext.onReady(function(){
                 dataIndex: Roles.roleValue[langId].role_name,
                 width: 90,
                 renderer: render_permision,
-                editor: new fm.ComboBox({
+                editor: {
+                    xtype: 'combo',
                     store: storePermision,
-                    displayField: 'value',
+                    displayField: 'name',
                     valueField: 'id',
-                    emptyText: 'Select a permision...',
+                    //emptyText: 'Select a permision...',
                     typeAhead: true,
                     lazyRender: true,
+                    selectOnFocus: true,
+                    forceSelection: true,
                     mode: 'local'
-                })
+                }
             });
         }
     }
@@ -291,7 +299,47 @@ Ext.onReady(function(){
         sm: new Ext.grid.RowSelectionModel({
             singleSelect: true
         }),
-        tbar: tbar
+        tbar: tbar,
+        listeners: {
+            afteredit: function(e){
+                var resourceId = e.record.id;
+                var value = e.value;
+                var roleId;
+                for (var objValue in Roles.roleValue) {
+                    if (Roles.roleValue[objValue].role_name == e.field) {
+                        roleId = Roles.roleValue[objValue].id;
+                        break;
+                    }
+                }
+                Ext.Ajax.request({
+                    url: Quick.baseUrl + Quick.adminUrl + 'test/edit-rule/',
+                    method: 'post',
+                    success: function(result, options){
+						
+                    },
+                    failure: function(response, request){
+                        var data = Ext.decode(response.responseText);
+                        if (!data.success) {
+                            alert(data.error);
+                            return;
+                        }
+                    },
+                    params: {
+                        resourceId: Ext.encode(resourceId),
+                        roleId: Ext.encode(roleId),
+                        value: Ext.encode(value)
+                    }
+                });
+                               
+                /*
+                 console.debug(e.record);
+                 console.debug(e.value);
+                 console.debug(e.field);
+                 console.debug(e.record.data.Accountant);
+                 console.debug(e.record.data.title_key);
+                 console.debug(e.record.id);*/
+            }
+        }
     });
     grid.on('rowdblclick', Role.edit);
     Ext.getCmp('grid').store.load();

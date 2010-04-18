@@ -44,7 +44,7 @@ class Quick_Db_Table_Row extends Zend_Db_Table_Row_Abstract
      * Sets all data in the row from an array.
      *
      * @param  array $data
-     * @return Ecart_Db_Table_Row Provides a fluent interface
+     * @return Quick_Db_Table_Row Provides a fluent interface
      */
     public function setFromArray(array $data)
     {
@@ -66,10 +66,10 @@ class Quick_Db_Table_Row extends Zend_Db_Table_Row_Abstract
         if (null === $table && !empty($this->_tableClass)) {
             $tableClass = $this->_tableClass;
             $tableClass = strtolower($tableClass);
-            $tableClass = str_replace('ecart_', '', $tableClass);
+            $tableClass = str_replace('Quick_', '', $tableClass);
             $tableClass = str_replace('_model_', '/', $tableClass);
-            //$this->setTable(Ecart::single($tableClass));
-            $table = Ecart::single($tableClass);
+            //$this->setTable(Quick::single($tableClass));
+            $table = Quick::single($tableClass);
         }
         return $table;
     }
@@ -93,18 +93,18 @@ class Quick_Db_Table_Row extends Zend_Db_Table_Row_Abstract
         try {
             return parent::save();
         } catch (Exception $e) {
-            Ecart::message()->addError($e->getMessage());
+            Quick::message()->addError($e->getMessage());
             return false;
         }
     }
 
     /**
-     * @return Ecart_Db_Table_Row
+     * @return Quick_Db_Table_Row
      */
     public function cache()
     {
         $args = func_num_args() ? serialize(func_get_args()) : '';
-        return Ecart::single('Ecart_Cache_Frontend_Query')->setInstance(
+        return Quick::single('Quick_Cache_Frontend_Query')->setInstance(
             $this, $args
         );
     }
