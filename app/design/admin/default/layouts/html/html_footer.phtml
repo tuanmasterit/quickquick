@@ -1,0 +1,19 @@
+<table width="100%">
+	<tr bgcolor="#555555">
+		<td>
+		<div align="center"><?php 
+		$endTime = microtime(true);
+		$ss = number_format($endTime - $this->startTime,5,',','.');
+		$info = ucfirst(strftime('%A ')). date($this->defaultDateTime . ' | g:i A') . " (Page loaded in $ss seconds)";
+		echo '<FONT SIZE="1" color="#FF9933"><b>' . $info . '</b></FONT>';
+		?></div>
+		</td>
+	</tr>
+</table>
+<table width="100%" style="background: transparent">
+	<tr>
+		<td style="text-align: left;"><font size=1>Address: Suite 6.1, E.Town 2, 364 Cong Hoa
+		street, Tan Binh district, Ho Chi Minh city, Viet Nam</font></td>
+		<td style="text-align: right;"><font size=1>VTM Corporation</font></td>
+	</tr>
+</table>

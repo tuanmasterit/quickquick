@@ -29,7 +29,13 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
     
     public function init()
     {
-        parent::init();        
+        parent::init();
+        $this->view->themeStyle = 'professional';
+        $this->view->companyName = 'Nhanh Nhanh Company';
+        $this->view->userName = 'admin';
+        $this->view->startTime = microtime(true);
+        $this->view->defaultDateTime = 'd/m/Y';
+        
         $this->view->adminUrl = Quick::config()->system->adminurl;
 	
         Zend_Auth::getInstance()->setStorage(

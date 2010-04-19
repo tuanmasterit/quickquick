@@ -1,0 +1,37 @@
+<table cellpadding="0" cellspacing="0" border="0" id="quick_menu"
+	class="quick_menu">
+	<tr>
+		<td align="left" style="width: 100%;" class="quick_menu_left"><img
+			src="<?php echo $this->skinUrl('/css/'. $this->themeStyle . '/images/company.png') ?>"
+			TITLE="' . _('Company') . '" ALT="' . _('Company') . '"> <?php echo ' ' . $this->escape($this->companyName) ?>
+		<a href=""><img
+			src="<?php echo $this->skinUrl('/css/'. $this->themeStyle . '/images/user.png') ?>"
+			TITLE="User" ALT="' . _('User') . '"> <?php echo $this->escape($this->userName) ?></a>
+		&nbsp;|&nbsp; <a
+			href="<?php echo $this->href('language/change/new_locale/vi_VN');?>"
+			id="logovi"> <?php echo $this->image('Vietnam-Flag-icon.png'); ?> </a>&nbsp;|&nbsp;
+		<a href="<?php echo $this->href('language/change/new_locale/en_US')?>"
+			id="logoen"> <?php echo $this->image('United-States-Flag-icon.png'); ?>
+		</a> <BR>
+		<font class="header_title"><?php echo $this->escape($this->pageTitle) ?></font>
+		</td>
+		<td class="quick_menu_tabs">
+		<table cellpadding="0" cellspacing="0" class="quick_menu_tabs">
+			<tr>
+				<td class="quick_menu_tab" align="center"><a accesskey="1" href=""><span
+					style="text-decoration: underline;">1</span> <?php echo _('Main Menu') ?></a>
+				</td>
+				<td class="quick_menu_tab" align="center"><a accesskey="2" href=""><span
+					style="text-decoration: underline;">2</span> <?php echo _('Customers')?></a></td>
+				<td class="quick_menu_tab" align="center"><a accesskey="3" href=""><span
+					style="text-decoration: underline;">3</span> <?php echo _('Items')?></a></td>
+				<td class="quick_menu_tab" align="center"><a accesskey="4" href=""><span
+					style="text-decoration: underline;">4</span> <?php echo _('Suppliers')?></a></td>
+				<td class="quick_menu_tab" align="center"><a accesskey="0" href="<?php echo $this->href('auth/logout');?>"
+					onclick="return confirm(\'' . _('Are you sure you wish to logout?') . '\');"><span
+					style="text-decoration: underline;">0</span> <?php echo _('Logout')?></a></td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
