@@ -50,4 +50,11 @@ class AuthController extends Quick_Core_Controller_Back
         unset(Quick::session()->roleId);
         $this->_redirect(Quick::config()->system->adminurl);
     }
+    
+    public function rolePermissionAction(){
+    	$this->view->pageTitle = 'Role Permission';
+        $roles = Quick::single('core/acl_role')->getRoles();
+        $this->view->roles = $roles;
+        $this->render();        
+    }
 }

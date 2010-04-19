@@ -1,0 +1,96 @@
+<table width='100%'>
+	<tr>
+		<td valign="top" class="menu_group_area">
+		<table width="100%">
+			<tr>
+				<td class="menu_group_headers">
+				<table>
+					<tr>
+						<td><img src="<?php echo $this->skinUrl('/css/'. $this->themeStyle . '/images/company.png') ?>" title="' . _('General Setup Options') . '" alt="">
+						</td>
+						<td class="menu_group_headers_text"><?php echo _('General'); ?></td>
+					</tr>
+				</table>
+				</td>
+				<td class="menu_group_headers">
+				<table>
+					<tr>
+						<td><img src="<?php echo $this->skinUrl('/css/'. $this->themeStyle . '/images/ar.png') ?>" title="' . _('Receivables/Payables Setup') . '" alt="">
+						</td>
+						<td class="menu_group_headers_text"><?php echo _('Receivables/Payables'); ?>
+
+						</td>
+					</tr>
+				</table>
+				</td>
+				<td class="menu_group_headers">
+				<table>
+					<tr>
+						<td><img src="<?php echo $this->skinUrl('/css/'. $this->themeStyle . '/images/inventory.png') ?>" title="' . _('Inventory Setup') . '" alt="">
+						</td>
+						<td class="menu_group_headers_text"><?php echo _('Inventory Setup'); ?>
+						</td>
+					</tr>
+				</table>
+				</td>
+
+
+			</tr>
+			<tr>
+
+				<td class="menu_group_items"><!-- Gereral set up options -->
+				<table width="100%" class="table_index">
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Company Preferences') . '</LI></a>'; ?>
+						</td>
+					</tr>
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Configuration Settings') . '</LI></a>'; ?>
+						</td>
+					</tr>
+
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('User Maintenance') . '</LI></a>'; ?>
+						</td>
+					</tr>
+					<tr>
+						<td class="menu_group_item"><a href='<?php echo $this->href('auth/role-permission')?>'><li> <?php echo _('Role Permissions')?></li></a>
+						</td>
+					</tr>					
+				</table>
+				</td>
+
+				<td class="menu_group_items"><!-- AR/AP set-up options -->
+				<table width="100%" class="table_index">
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Sales Types') . '</LI></a>'; ?>
+						</td>
+					</tr>
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Customer Types') . '</LI></a>'; ?>
+						</td>
+					</tr>					
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Sales People') . '</LI></a>'; ?>
+						</td>
+					</tr>					
+				</table>
+				</td>
+
+				<td class="menu_group_items"><!-- Inventory set-up options -->
+				<table width="100%" class="table_index">
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Inventory Categories Maintenance') . '</LI></a>'; ?>
+						</td>
+					</tr>
+					<tr>
+						<td class="menu_group_item"><?php echo "<a href=''><LI>" . _('Inventory Locations Maintenance') . '</LI></a>'; ?>
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>

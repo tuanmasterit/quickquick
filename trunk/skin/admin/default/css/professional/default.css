@@ -43,8 +43,7 @@ a:hover {
 }
 
 table {
-  background-color: #EEEEFF;
-  margin: 0 auto;
+  
 }
 .dpTbl {
 	border: solid navy 1px;
@@ -286,6 +285,7 @@ select {
 
 .main_menu {
 	border: 2px inset white;
+	background-color: #EEEEFF;
 }
 
 .main_menu table {
@@ -344,6 +344,7 @@ span.main_menu_nolink {
 
 .menu_group_area {
   border: 2px inset white;
+  background: #EEEEFF;
 }
 
 .blank_area table {
@@ -361,6 +362,7 @@ span.main_menu_nolink {
 	font-size: 12px;
 	font-weight: bold;
 	color: black;
+	text-align: center;
 }
 
 .menu_group_items {
@@ -368,6 +370,7 @@ span.main_menu_nolink {
 	background-color: white;
 	border: 2px outset #AAAAAA;
 	padding: 10px;
+	background: #EEEEFF;
 }
 
 .menu_group_item {

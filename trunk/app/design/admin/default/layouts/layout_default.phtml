@@ -10,12 +10,12 @@
 				<tr><td>
 					<?php echo $this->render('html/top_menu.phtml') ?>
 					<?php echo $this->render('html/main_menu.phtml') ?>
+					<?php echo $this->layout()->content;?>
 				</td></tr>
 				</table>
 				</td>
 			</tr>
 		</table>
-		<?php echo $this->render('html/html_footer.phtml') ?>		
-		<?php echo $this->layout()->content;?>
+		<?php echo $this->render('html/html_footer.phtml') ?>
     </body>
 </html>
