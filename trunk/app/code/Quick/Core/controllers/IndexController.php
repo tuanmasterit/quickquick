@@ -127,7 +127,28 @@ class IndexController extends Quick_Core_Controller_Back
     	$result = array();
     	$this->layout->disableLayout();
         if ($this->_hasParam('roleId') && $this->_hasParam('resourceId') && $this->_hasParam('value')) {
-            $result[] = Quick::single('core/acl_rule')->editRulesOfResource($resourceId, $roleId, $value);
+            $result[] = Quick::single('core/acl_rule')->editRule($resourceId, $roleId, $value);
+        } else {
+            Quick::message()->addError('Invalid parameter recieved. Parameters is required');
+            return $this->_helper->json->sendFailure();
+        }
+        
+        $this->_helper->json->sendSuccess(array(
+            'data' => array_values($result)
+        ));    	
+    }
+    
+	public function editRuleResourceAction()
+    {
+    	$resourceId = Zend_Json_Decoder::decode($this->_getParam('resourceId'));
+    	$roleId = Zend_Json_Decoder::decode($this->_getParam('roleId'));
+    	$field = Zend_Json_Decoder::decode($this->_getParam('field'));
+    	$value = Zend_Json_Decoder::decode($this->_getParam('value'));
+    	$result = array();
+    	$this->layout->disableLayout();
+        if ($this->_hasParam('roleId') && $this->_hasParam('resourceId') && 
+        	$this->_hasParam('value') && $this->_hasParam('value')) {
+            $result[] = Quick::single('core/acl_rule')->editRuleOfResource($resourceId, $roleId, $value, $field);
         } else {
             Quick::message()->addError('Invalid parameter recieved. Parameters is required');
             return $this->_helper->json->sendFailure();

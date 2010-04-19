@@ -2,62 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php echo $this->render('html/html_head.phtml') ?>
-        <title><?php echo $this->escape($this->pageTitle);?> : QuickQuick Administrator</title>
-        <link rel="icon" href="<?php echo $this->skinUrl('favicon.png') ?>" type="image/x-icon" />
-        <link rel="shortcut icon" href="<?php echo $this->skinUrl('favicon.png') ?>" type="image/x-icon" />
-       
-		{{headLink}}
-		{{headScript}}
-		<script type="text/javascript">
-        var Quick = {
-            baseUrl: '<?php echo $this->baseUrl ?>',
-            skinUrl: '<?php echo $this->skinUrl ?>',
-            adminUrl: '<?php echo $this->adminUrl ?>'
-        };
-        </script>
-        <script type="text/javascript">
-        Ext.namespace('Quick');
-        Ext.BLANK_IMAGE_URL = '<?php echo $this->baseUrl ?>/js/extjs/resources/images/default/s.gif';
-        </script>
-        
-		<?php 
-			$this->headLink()
-	        ->setUseProxy(Quick::config()->developer->enable_proxy, true)
-	        ->appendStylesheet('js/extjs/resources/css/ext-all.css');
-	        
-			$this->headScript()
-			->setUseProxy(Quick::config(Quick::config()->developer->enable_proxy, true));
-            $this->headScript()->offsetSetFile(-100, 'js/jquery/jquery-1.4.min.js');                  
-            $this->headScript()->offsetSetFile(-99, 'js/extjs/adapter/ext/ext-base.js');           
-            $this->headScript()->offsetSetFile(-98, 'js/extjs/ext-all.js');
-            $this->headScript()->offsetSetFile(-97, 'js/quick/admin/core/translate.js');	
-
-            $locale = Quick_Locale::getLocale()->toString();
-            $this->headScript()
-            ->appendFile('js/quick/admin/translation/'. $locale .'/core.js');
-            
-        	$language = Quick_Locale::getLocale()->getLanguage();
-        	if (file_exists('js/extjs/src/locale/ext-lang-' . $language . '.js')) {
-	            $this->headScript()->appendFile(
-	                'js/extjs/src/locale/ext-lang-' . $language . '.js'
-	            );
-	        };
-	        
-			$this->addFilter('Placeholder'); 
-		?>
     </head>
     <body>
-		<p>Quick Quick ERP</p>
-		<a href="<?php echo $this->href('auth/logout');?>">Log out</a>&nbsp;|&nbsp;
-		<a href="<?php echo $this->href('language/change/new_locale/vi_VN');?>" id="logovi">
-        	<?php echo $this->image('Vietnam-Flag-icon.png'); ?>
-        </a>&nbsp;|&nbsp;
-		<a href="<?php echo $this->href('language/change/new_locale/en_US')?>" id="logoen">
-        	<?php echo $this->image('United-States-Flag-icon.png'); ?>
-        </a>
-		<p></p>
-		<center>
+		<table class="callout_main" cellpadding="0" cellspacing="0">
+			<tr><td colspan="2" rowspan="2">
+				<table class="main_page" cellpadding="0" cellspacing="0">
+				<tr><td>
+					<?php echo $this->render('html/top_menu.phtml') ?>
+					<?php echo $this->render('html/main_menu.phtml') ?>
+				</td></tr>
+				</table>
+				</td>
+			</tr>
+		</table>
+		<?php echo $this->render('html/html_footer.phtml') ?>		
 		<?php echo $this->layout()->content;?>
-		</center>
     </body>
 </html>

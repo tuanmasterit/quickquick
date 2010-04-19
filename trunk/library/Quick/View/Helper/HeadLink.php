@@ -69,8 +69,8 @@ class Quick_View_Helper_HeadLink extends Zend_View_Helper_HeadLink
         }
         $baseUrl = $absolute ? 
             $this->view->baseUrl : Zend_Controller_Front::getInstance()->getBaseUrl();
-
-        return trim($file, '/');
+        
+        return $baseUrl . '/' . trim($file, '/');
     }
     
     /**
@@ -116,12 +116,11 @@ class Quick_View_Helper_HeadLink extends Zend_View_Helper_HeadLink
             $item = current($group);
             $attributes = (array) $item;
             $html = '<link ';
-
+            
             foreach ($group as $item) {
                 $hrefs[] = trim($this->getCss($item->href), '/');
             }
-            
-            $html .= 'href="'.$this->view->baseUrl . '/' . implode(',', $hrefs) . '" ';
+            $html .= 'href="'. '/' . implode(',', $hrefs) . '" ';
             
             $this->_completeItem($html, $attributes);
         }

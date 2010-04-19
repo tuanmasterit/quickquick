@@ -4,44 +4,6 @@ Ext.onReady(function(){
     var roleWin;
     var fm = Ext.form;
     
-    Ext.grid.CheckColumn = function(config){
-        Ext.apply(this, config);
-        if (!this.id) {
-            this.id = Ext.id();
-        }
-        this.renderer = this.renderer.createDelegate(this);
-    };
-    
-    Ext.grid.CheckColumn.prototype = {
-        init: function(grid){
-            this.grid = grid;
-            if (this.grid.rendered) {
-                var view = this.grid.getView();
-                view.mainBody.on('mousedown', this.onMouseDown, this);
-            }
-            else {
-                this.grid.on('render', function(){
-                    var view = this.grid.getView();
-                    view.mainBody.on('mousedown', this.onMouseDown, this);
-                }, this);
-            }
-        },
-        
-        onMouseDown: function(e, t){
-            if (t.className && t.className.indexOf('x-grid3-cc-' + this.id) != -1) {
-                e.stopEvent();
-                var index = this.grid.getView().findRowIndex(t);
-                var record = this.grid.store.getAt(index);
-                record.set(this.dataIndex, record.data[this.dataIndex] == 0 ? 1 : 0);
-            }
-        },
-        
-        renderer: function(v, p, record){
-            p.css += ' x-grid3-check-col-td';
-            return '<div class="x-grid3-check-col' + (v ? '-on' : '') + ' x-grid3-cc-' + this.id + '">&#160;</div>';
-        }
-    };
-    
     var Role = {
         clearForm: function(){
         
@@ -63,9 +25,24 @@ Ext.onReady(function(){
                             'id': result.data[0],
                             'role_name': roleName
                         })
+                        record.push({
+                            name: roleName,
+                            type: 'string'
+                        });
+                        test_object = Ext.data.Record.create(record);
+                        Ext.getCmp('grid').store.reader = new Ext.data.JsonReader({
+                            root: 'data',
+                            totalProperty: 'count',
+                            id: 'resource_id'
+                        }, test_object);
                         
-                        Ext.getCmp('grid').store.load();
-                        var cm = Ext.getCmp('grid').getColumnModel();
+                        Ext.getCmp('grid').store.load();                     
+                        var cm = new Ext.grid.ColumnModel({
+                            defaults: {
+                                sortable: true
+                            },
+                            columns: columns
+                        });
                         cm.config.push({
                             id: roleName,
                             header: roleName,
@@ -85,11 +62,7 @@ Ext.onReady(function(){
                                 mode: 'local'
                             })
                         });
-                        
-                        Ext.getCmp('grid').reconfigure(grid.getStore(), new Ext.grid.ColumnModel(cm));
-                        
-                        //var data = Ext.decode(result.responseText);
-                        //reload();
+                        Ext.getCmp('grid').reconfigure(grid.getStore(), new Ext.grid.ColumnModel(cm));                        
                     },
                     failure: function(response, request){
                         var data = Ext.decode(response.responseText);
@@ -108,7 +81,7 @@ Ext.onReady(function(){
             $('#div-form-role').css('display', 'block');
             $('#selectedFunction').val(selectedFunction);
             
-            Ext.getCmp('grid1').store.load();
+            Ext.getCmp('gridEditRole').store.load();
             
             roleWin.setTitle('New Role');
             roleWin.show();
@@ -315,7 +288,8 @@ Ext.onReady(function(){
                     url: Quick.baseUrl + Quick.adminUrl + 'test/edit-rule/',
                     method: 'post',
                     success: function(result, options){
-						
+                        // display message
+                        //reload()
                     },
                     failure: function(response, request){
                         var data = Ext.decode(response.responseText);
@@ -330,7 +304,7 @@ Ext.onReady(function(){
                         value: Ext.encode(value)
                     }
                 });
-                               
+                
                 /*
                  console.debug(e.record);
                  console.debug(e.value);
@@ -348,8 +322,8 @@ Ext.onReady(function(){
     
     // functions
     function reload(){
+    
         Ext.getCmp('grid').store.load();
-        //grid.render();
     }
     
     var tabsWraper = new Ext.Panel({
@@ -357,8 +331,8 @@ Ext.onReady(function(){
         collapsible: false,
         border: false,
         layout: 'fit',
-        contentEl: 'div-form-role'
-        //autoScroll: true
+        contentEl: 'div-form-role',
+        autoScroll: true
     });
     
     /* Creating popup windows */
@@ -366,7 +340,7 @@ Ext.onReady(function(){
         items: [tabsWraper], //tabPanel, created in form-product.phtml
         layout: 'border',
         constrainHeader: true,
-        width: 830,
+        width: 829,
         height: 300,
         closeAction: 'hide',
         maximizable: true,

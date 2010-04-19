@@ -39,17 +39,18 @@ class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 		$select = $this->getAdapter()->select();
 		$select->from(
 		array('cr' => $this->_name),
-		array('cr.resource_id', 'cr.is_read', 'cr.is_add', 'cr.is_modify',
-					'cr.is_change', 'cr.is_delete', 'cr.is_print', 'cr.is_list'))
+		array('cr.resource_id', 'cr.is_add', 'cr.is_modify',
+					'cr.is_change', 'cr.is_delete', 'cr.is_view', 'cr.is_list', 'cr.is_print'))
 		->joinLeft(
 		array('crole' => 'core_acl_role'),
 					"crole.id  = cr.role_id", 
-		array('crole.role_name'))
-		->where('cr.resource_id = ?', $resourceId);
+		array('crole.role_name', 'crole.id'))
+		->where('cr.resource_id = ?', $resourceId)
+		->where('cr.permission = ?', 'allow');
 		return $this->getAdapter()->fetchAll($select->__toString());
 	}
 
-	public function editRulesOfResource($resourceId, $roleId, $value){
+	public function editRule($resourceId, $roleId, $value){
 		$db = $this->getAdapter();
 		$row = $this->fetchRow(array(
 		$db->quoteInto('role_id = ?', $roleId),
@@ -71,5 +72,21 @@ class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 			return $this->insert($row);
 		}
 
+	}
+	
+	public function editRuleOfResource($resourceId, $roleId, $value, $field){
+		$db = $this->getAdapter();
+		$row = $this->fetchRow(array(
+		$db->quoteInto('role_id = ?', $roleId),
+		$db->quoteInto('resource_id = ?', $resourceId)));
+
+		if (isset($row)) {
+			$row = array(
+				$field => $value
+			);
+			return $this->update($row, array(
+			$db->quoteInto('role_id = ?', $roleId),
+			$db->quoteInto('resource_id = ?', $resourceId)));
+		}
 	}
 }

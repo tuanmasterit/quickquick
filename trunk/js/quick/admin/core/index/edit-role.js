@@ -10,9 +10,9 @@ Ext.onReady(function(){
     
     Ext.grid.CheckColumn.prototype = {
         init: function(grid){
-            this.grid = grid;
-            this.grid.on('render', function(){
-                var view = this.grid.getView();
+            this.gridEditRole = grid;
+            this.gridEditRole.on('render', function(){
+                var view = this.gridEditRole.getView();
                 view.mainBody.on('mousedown', this.onMouseDown, this);
             }, this);
         },
@@ -20,10 +20,37 @@ Ext.onReady(function(){
         onMouseDown: function(e, t){
             if (t.className && t.className.indexOf('x-grid3-cc-' + this.id) != -1) {
                 e.stopEvent();
-                var index = this.grid.getView().findRowIndex(t);
-                var record = this.grid.store.getAt(index);
+                var index = this.gridEditRole.getView().findRowIndex(t);
+                var record = this.gridEditRole.store.getAt(index);
                 //alert(record.data.resource_id);
+                if(!record.data.resource_id) {
+	            	Ext.Msg.alert('Error', 'Please input Resource before',Ext.MessageBox.ERROR);
+					record.reject();
+					return;
+	            }
                 record.set(this.dataIndex, !record.data[this.dataIndex]);
+
+                Ext.Ajax.request({
+                    url: Quick.baseUrl + Quick.adminUrl + 'test/edit-rule-resource/',
+                    method: 'post',
+                    success: function(result, options){
+                        // display message
+                        //reload()
+                    },
+                    failure: function(response, request){
+                        var data = Ext.decode(response.responseText);
+                        if (!data.success) {
+                            alert(data.error);
+                            return;
+                        }
+                    },
+                    params: {
+                        resourceId: Ext.encode(record.data.resource_id),
+                        roleId: Ext.encode(record.id),
+						field: Ext.encode(this.dataIndex),
+                        value: Ext.encode(record.data[this.dataIndex] ? 1: 0)
+                    }
+                });
             }
         },
         
@@ -37,9 +64,6 @@ Ext.onReady(function(){
         name: 'resource_id',
         type: 'string'
     }, {
-        name: 'is_read',
-        type: 'bool'
-    }, {
         name: 'is_add',
         type: 'bool'
     }, {
@@ -52,23 +76,29 @@ Ext.onReady(function(){
         name: 'is_delete',
         type: 'bool'
     }, {
-        name: 'is_print',
+        name: 'is_view',
         type: 'bool'
     }, {
         name: 'is_list',
         type: 'bool'
     }, {
+        name: 'is_print',
+        type: 'bool'
+    }, {
         name: 'role_name',
+        type: 'string'
+    }, {
+        name: 'id',
         type: 'string'
     }];
     
     var test_object = Ext.data.Record.create(record);
     
-    var ds = new Ext.data.Store({
+    var dsRole = new Ext.data.Store({
         reader: new Ext.data.JsonReader({
             root: 'data',
             totalProperty: 'count',
-            id: 'code'
+            id: 'id'
         }, test_object),
         proxy: new Ext.data.HttpProxy({
             url: Quick.baseUrl + Quick.adminUrl + 'test/get-rules-of-resource'
@@ -81,55 +111,55 @@ Ext.onReady(function(){
         remoteSort: true
         //groupField:'role_name'
     });
-    var is_read = new Ext.grid.CheckColumn({
-        header: 'Is Read',
-        dataIndex: 'is_read',
-        autoWidth: true,
-        align: 'center'
-    });
-	var is_add = new Ext.grid.CheckColumn({
+    var is_add = new Ext.grid.CheckColumn({
         header: 'Is Add',
         dataIndex: 'is_add',
         autoWidth: true,
         align: 'center'
     });
-	var is_modify = new Ext.grid.CheckColumn({
+    var is_modify = new Ext.grid.CheckColumn({
         header: 'Is Modify',
         dataIndex: 'is_modify',
         autoWidth: true,
         align: 'center'
     });
-	var is_change = new Ext.grid.CheckColumn({
+    var is_change = new Ext.grid.CheckColumn({
         header: 'Is Change',
         dataIndex: 'is_change',
         autoWidth: true,
         align: 'center'
     });
-	var is_delete = new Ext.grid.CheckColumn({
+    var is_delete = new Ext.grid.CheckColumn({
         header: 'Is Delete',
         dataIndex: 'is_delete',
         autoWidth: true,
         align: 'center'
     });
-	var is_print = new Ext.grid.CheckColumn({
+    var is_view = new Ext.grid.CheckColumn({
+        header: 'Is View',
+        dataIndex: 'is_view',
+        autoWidth: true,
+        align: 'center'
+    });
+    var is_print = new Ext.grid.CheckColumn({
         header: 'Is Print',
         dataIndex: 'is_print',
         autoWidth: true,
         align: 'center'
     });
-	var is_list = new Ext.grid.CheckColumn({
+    var is_list = new Ext.grid.CheckColumn({
         header: 'Is List',
         dataIndex: 'is_list',
         autoWidth: true,
         align: 'center'
     });
-   
+    
     var columns = [];
     columns.push({
         header: 'Role',
         dataIndex: 'role_name',
         autoWidth: true
-    }, is_read, is_add, is_modify, is_change, is_delete, is_print, is_list);
+    }, is_add, is_modify, is_change, is_delete, is_view, is_list, is_print);
     
     var cm = new Ext.grid.ColumnModel({
         defaults: {
@@ -141,19 +171,19 @@ Ext.onReady(function(){
     var tbar = new Ext.Toolbar({
         items: ['->', {
             text: 'Reload',
-            handler: reload,
+            handler: reloadGridRole,
             iconCls: 'btn-text-icon',
             icon: Quick.skinUrl + '/images/icons/refresh.png'
         }]
     });
-    var grid = new Ext.grid.EditorGridPanel({
+    var gridEditRole = new Ext.grid.EditorGridPanel({
         cm: cm,
-        id: 'grid1',
+        id: 'gridEditRole',
         //title: 'Authenticate',
         height: 300,
         width: 800,
         renderTo: 'gird-edit-role',
-        store: ds,
+        store: dsRole,
         clicksToEdit: 1,
         loadMask: true,
         trackMouseOver: true,
@@ -168,21 +198,21 @@ Ext.onReady(function(){
         sm: new Ext.grid.RowSelectionModel({
             singleSelect: true
         }),
-		plugins: [is_read, is_add, is_modify, is_change, is_delete, is_print, is_list],
-		tbar: tbar
+        plugins: [is_add, is_modify, is_change, is_delete, is_view, is_print, is_list],
+        tbar: tbar
     });
     
     //Ext.getCmp('grid1').store.load();
-    ds.on('beforeload', function(){
-        
-        ds.baseParams.selectedFunction = Ext.getDom('selectedFunction').value;
+    dsRole.on('beforeload', function(){
+    
+        dsRole.baseParams.selectedFunction = Ext.getDom('selectedFunction').value;
     });
-	
+    
     Ext.QuickTips.init();
     
     // functions
-    function reload(){
-        Ext.getCmp('grid1').store.reload();
+    function reloadGridRole(){
+        Ext.getCmp('gridEditRole').store.reload();
     }
     
 });
