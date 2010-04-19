@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 15, 2010 at 06:28 PM
+-- Generation Time: Apr 19, 2010 at 06:26 PM
 -- Server version: 5.1.33
 -- PHP Version: 5.2.9
 
@@ -169,7 +169,8 @@ INSERT INTO `core_acl_resource` (`module_id`, `resource_id`, `title_key`) VALUES
 (3, 'general', 'module-general'),
 (4, 'inventory', 'module-inventory'),
 (6, 'purchase', 'module-purchase'),
-(5, 'sale', 'module-sale');
+(5, 'sale', 'module-sale'),
+(5, 'sale/transaction', 'sale-transaction');
 
 -- --------------------------------------------------------
 
@@ -224,6 +225,13 @@ CREATE TABLE IF NOT EXISTS `core_acl_rule` (
   `role_id` mediumint(8) unsigned NOT NULL,
   `resource_id` varchar(255) NOT NULL,
   `permission` enum('allow','deny') NOT NULL,
+  `is_add` tinyint(1) NOT NULL DEFAULT '0',
+  `is_modify` tinyint(1) NOT NULL DEFAULT '0',
+  `is_change` tinyint(1) NOT NULL DEFAULT '0',
+  `is_delete` tinyint(1) NOT NULL DEFAULT '0',
+  `is_view` tinyint(1) NOT NULL DEFAULT '0',
+  `is_list` tinyint(1) NOT NULL DEFAULT '0',
+  `is_print` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`role_id`,`resource_id`),
   KEY `fk_core_acl_resource_id` (`resource_id`),
   KEY `fk_core_acl_rule_id` (`role_id`)
@@ -233,15 +241,31 @@ CREATE TABLE IF NOT EXISTS `core_acl_rule` (
 -- Dumping data for table `core_acl_rule`
 --
 
-INSERT INTO `core_acl_rule` (`role_id`, `resource_id`, `permission`) VALUES
-(1, 'accountant', 'allow'),
-(1, 'core', 'allow'),
-(1, 'general', 'allow'),
-(1, 'inventory', 'allow'),
-(1, 'purchase', 'allow'),
-(1, 'sale', 'allow'),
-(2, 'accountant', 'allow'),
-(3, 'sale', 'allow');
+INSERT INTO `core_acl_rule` (`role_id`, `resource_id`, `permission`, `is_add`, `is_modify`, `is_change`, `is_delete`, `is_view`, `is_list`, `is_print`) VALUES
+(1, 'accountant', 'allow', 0, 1, 1, 0, 0, 0, 0),
+(1, 'core', 'allow', 1, 1, 0, 0, 1, 0, 0),
+(1, 'general', 'allow', 0, 0, 0, 0, 0, 0, 0),
+(1, 'inventory', 'allow', 0, 0, 0, 0, 0, 0, 0),
+(1, 'purchase', 'allow', 0, 0, 0, 0, 0, 0, 0),
+(1, 'sale', 'allow', 1, 1, 1, 0, 0, 0, 0),
+(1, 'sale/transaction', 'allow', 1, 0, 0, 0, 0, 0, 0),
+(2, 'accountant', 'allow', 1, 1, 1, 0, 0, 0, 0),
+(2, 'sale', 'allow', 1, 1, 1, 0, 0, 0, 0),
+(3, 'accountant', 'allow', 0, 0, 0, 0, 0, 0, 0),
+(3, 'core', 'allow', 0, 1, 0, 1, 0, 0, 0),
+(3, 'sale', 'allow', 1, 1, 1, 0, 0, 0, 0),
+(3, 'sale/transaction', 'allow', 1, 0, 0, 0, 0, 0, 0),
+(4, 'core', 'deny', 0, 0, 0, 0, 0, 0, 0),
+(4, 'general', 'allow', 0, 0, 0, 0, 0, 0, 0),
+(4, 'purchase', 'deny', 0, 0, 0, 0, 0, 0, 0),
+(4, 'sale', 'allow', 1, 1, 1, 0, 0, 0, 0),
+(5, 'accountant', 'deny', 0, 0, 0, 0, 0, 0, 0),
+(5, 'core', 'allow', 1, 1, 1, 1, 0, 0, 0),
+(5, 'general', 'deny', 0, 0, 0, 0, 0, 0, 0),
+(5, 'inventory', 'deny', 0, 0, 0, 0, 0, 0, 0),
+(5, 'purchase', 'deny', 0, 0, 0, 0, 0, 0, 0),
+(5, 'sale', 'allow', 1, 1, 1, 0, 0, 0, 1),
+(5, 'sale/transaction', 'deny', 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -432,7 +456,9 @@ CREATE TABLE IF NOT EXISTS `core_module_language` (
 --
 
 INSERT INTO `core_module_language` (`module_id`, `language_id`, `key`, `value`) VALUES
+(1, 1, 'Home', 'Home'),
 (1, 1, 'module-core', 'The System Function'),
+(1, 2, 'Home', 'Trang chủ'),
 (1, 2, 'module-core', 'Chức năng hệ thống'),
 (2, 1, 'module-accountant', 'The Accountant Function'),
 (2, 2, 'module-accountant', 'Chức năng kế toán'),
