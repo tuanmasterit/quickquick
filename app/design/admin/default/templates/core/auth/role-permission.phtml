@@ -1,0 +1,56 @@
+<script type="text/javascript">
+	var Roles = {    	
+        roleValue: <?php echo Zend_Json_Encoder::encode($this->roles) ?>
+    };
+</script>
+<?php
+$this->headScript()
+->appendFile('js/quick/admin/core/index/test-auth.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/index/user.js');
+?>
+<?php echo $this->formHidden('selectedFunction', '0');?>
+<br/><center>
+<div id="tabs1">				       
+	<div id="role" class="x-hide-display">
+        <div id="test-grid" style="text-align:left;"></div>
+    </div>
+    <div id="user" class="x-hide-display">
+		<div id="gird-user" style="text-align:left;"></div>	
+    </div>
+</div>
+</center><br/>
+
+<div id="div-form-role">
+    <?php echo $this->render('index/edit-role.phtml');?>
+</div>
+<script type="text/javascript">
+	
+	Ext.onReady(function(){
+		var tabs = new Ext.TabPanel({
+	        renderTo: 'tabs1',
+	        enableTabScroll:true,
+	        activeTab: 0,
+	        frame:true,
+	        defaults:{autoHeight: true},
+	        width: 800,
+	        items:[
+	            {contentEl:'role', id:'role', title: 'Role', disabled : false,
+	            	listeners: { 
+	            		beforeshow : function(){
+	            			Ext.getCmp('grid').getStore().reload();
+			            }
+	            	}
+			    },
+			    {contentEl:'user',id:'user', title: 'User', disabled : false, 
+			    	listeners: { 
+	            		beforeshow : function(){
+	            			Ext.getCmp('grid-userid').getStore().reload();
+			            }
+	            	}
+			    }
+	        ]
+	    });
+	});
+</script>
+
