@@ -27,6 +27,11 @@ class Quick_View_Helper_Href
      */
     public function href($href = '')
     {
+    	/*echo $this->_baseUrl;
+    	echo 'http://'
+            . $this->_baseUrl
+            . '/'
+            . ltrim($href, '/');*/
         return 'http://'
             . $this->_baseUrl
             . '/'

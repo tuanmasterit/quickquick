@@ -50,8 +50,8 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
     
     public function preDispatch()
     {
-        $this->auth();
-        $this->checkPermission();
+        //$this->auth();
+        //$this->checkPermission();
     }
 
     public function auth()
