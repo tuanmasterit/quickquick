@@ -4,12 +4,12 @@
 		<td class="main_menu">
 		<table class="main_menu">
 			<tr>
-				<td class='main_menu_unselected'><a href=""><?php echo _('Sales') ?></a></td>
-				<td class='main_menu_unselected'><a href=""><?php echo _('Purchases') ?></a></td>
-				<td class='main_menu_unselected'><a href=""><?php echo _('Inventory') ?></a></td>
-				<td class='main_menu_unselected'><a href=""><?php echo _('Accountant') ?></a></td>
-				<td class='main_menu_unselected'><a href=""><?php echo _('General Legder') ?></a></td>
-				<td class='main_menu_selected'><a href=""><?php echo _('Setup') ?></a></td>
+				<td class='main_menu_unselected'><a href="<?php echo $this->href('sale/')?>"><?php echo _('Sales') ?></a></td>
+				<td class='main_menu_unselected'><a href="<?php echo $this->href('purchase/')?>"><?php echo _('Purchases') ?></a></td>
+				<td class='main_menu_unselected'><a href="<?php echo $this->href('inventory/')?>"><?php echo _('Inventory') ?></a></td>
+				<td class='main_menu_unselected'><a href="<?php echo $this->href('accountant/')?>"><?php echo _('Accountant') ?></a></td>
+				<td class='main_menu_unselected'><a href="<?php echo $this->href('general/')?>"><?php echo _('General Legder') ?></a></td>
+				<td class='main_menu_selected'><a href="<?php echo $this->href('/')?>"><?php echo _('System') ?></a></td>
 			</tr>
 		</table>
 		</td>
