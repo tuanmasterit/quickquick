@@ -13,12 +13,12 @@ class Quick_Core_Model_Acl extends Zend_Acl
     
     private function _loadResources(){
     	foreach ($this->getResources() as $resource){
-    	if (false !== ($pos = strrpos($resource['resource_id'], '/'))) {
-                $parentId = substr($resource['resource_id'], 0, $pos);
+    		if (false !== ($pos = strrpos($resource['function_action'], '/'))) {
+                $parentId = substr($resource['function_action'], 0, $pos);
             } else {
                 $parentId = null;
             }
-            $this->add(new Zend_Acl_Resource($resource['resource_id']), $parentId);
+            $this->add(new Zend_Acl_Resource($resource['function_action']), $parentId);
     	}
     }
     
@@ -29,8 +29,9 @@ class Quick_Core_Model_Acl extends Zend_Acl
     
     public function getResources(){
     	if(null === $this->_rescs){
-    		$this->_rescs = Quick::single('core/acl_resource')->fetchAll(null, 'resource_id ASC')->toArray();
+    		$this->_rescs = Quick::single('core/acl_resource')->fetchAll(null, 'display_order ASC')->toArray();
     	}
+    	
     	return $this->_rescs;
     }
     
@@ -50,17 +51,14 @@ class Quick_Core_Model_Acl extends Zend_Acl
         $this->addRoleRecursive($role);
         $rolesForLoad = $this->_table->getAllParents($roleId);
         $rolesForLoad[] = $roleId;
-        $where = $this->_table->getAdapter()->quoteInto('role_id IN(?)', $rolesForLoad);        
-
-        $result = $this->_table->getAdapter()->query(
-            "SELECT * FROM admin_acl_rule WHERE $where"
-        );
+        
+        $result = Quick::single('core/acl_rule')->getPermissionOfRules($rolesForLoad);
 
         while (($row = $result->fetch())) {
             if ($row['permission'] == 'allow') {
-                $this->allow($row['role_id'], $row['resource_id']);
+                $this->allow($row['role_id'], $row['function_action']);
             } elseif ($row['permission'] == 'deny') {
-                $this->deny($row['role_id'], $row['resource_id']);
+                $this->deny($row['role_id'], $row['function_action']);
             }
         }
     }

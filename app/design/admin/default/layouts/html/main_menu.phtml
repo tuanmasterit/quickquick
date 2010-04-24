@@ -20,6 +20,7 @@
 		</td>
 	</tr>
 </table>
+<?php if($this->isSetMenu) {?>
 <table width='100%'>
 	<tr>
 		<td valign="top" class="menu_group_area">
@@ -46,7 +47,7 @@
 				foreach($this->executionMenu[$i]['functions'] as $function){
 					echo '<tr>';
 					echo "<td class='menu_group_item'>";
-					echo "<a href=''><li>" . $function['value'] . '</li></a>';
+					echo "<a href='". $this->href($function['function_action']) ."'><li>" . $function['value'] . '</li></a>';
 					echo '</td>';
 					echo '</tr>';
 				}
@@ -60,3 +61,4 @@
 		</td>
 	</tr>
 </table>
+<?php }?>

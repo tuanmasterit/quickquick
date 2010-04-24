@@ -8,7 +8,7 @@
  */
 class Quick_Core_Model_Acl_Role extends Quick_Db_Table
 {
-	protected $_name = 'core_acl_role';
+	protected $_name = 'definition_list_role';
 	protected $_rolesTree = null;
 
 	private function _initTree()
@@ -17,16 +17,16 @@ class Quick_Core_Model_Acl_Role extends Quick_Db_Table
 		return;
 		$result = $this->getAdapter()->query(
             "SELECT ar.*, arp.role_id as child_id FROM {$this->_name} ar "
-		. "LEFT JOIN " . self::$_db_prefix . "admin_acl_role_parent arp ON arp.role_parent_id = ar.id"
+		. "LEFT JOIN " . self::$_db_prefix . "core_acl_role_parent arp ON arp.role_parent_id = ar.role_id where ar.inactive = 0"
 		);
 
 		$rolesTree = array();
 
 		while (($row = $result->fetch())) {
-			if (!isset($rolesTree[$row['id']]))
-			$rolesTree[$row['id']] = $row;
+			if (!isset($rolesTree[$row['role_id']]))
+			$rolesTree[$row['role_id']] = $row;
 			if ($row['child_id']) {
-				$rolesTree[$row['id']]['childs'][] = $row['child_id'];
+				$rolesTree[$row['role_id']]['childs'][] = $row['child_id'];
 			}
 		}
 
@@ -45,7 +45,7 @@ class Quick_Core_Model_Acl_Role extends Quick_Db_Table
 
 	public function getAllParents($id)
 	{
-		$this->_initTree();
+		$this->_initTree($this->_rolesTree);
 		if (isset($this->_rolesTree[$id]['parents']) && sizeof($this->_rolesTree[$id]['parents'])) {
 			$parents = $this->_rolesTree[$id]['parents'];
 			$subparents = array();

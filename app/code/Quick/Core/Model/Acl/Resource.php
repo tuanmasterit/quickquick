@@ -8,7 +8,7 @@
  */
 class Quick_Core_Model_Acl_Resource extends Quick_Db_Table
 {
-	protected $_name = 'core_acl_resource';
+	protected $_name = 'definition_list_function';
 	
 	public function getResources(){
 		$select = $this->getAdapter()->select();

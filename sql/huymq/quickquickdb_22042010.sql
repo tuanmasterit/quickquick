@@ -19,6 +19,28 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Database: `quickquickdb`
 --
 
+CREATE TABLE IF NOT EXISTS `core_package` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `package` varchar(64) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `version` varchar(10) NOT NULL,
+  `is_active` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Dumping data for table `core_module`
+--
+
+INSERT INTO `core_package` (`id`, `package`, `code`, `name`, `version`, `is_active`) VALUES
+(1, 'Quick_Core', 'Quick_Core', 'Core', '0.1', 1),
+(2, 'Quick_Accountant', 'Quick_Accountant', 'Accountant', '0.1', 1),
+(3, 'Quick_General', 'Quick_General', 'General', '0.1', 1),
+(4, 'Quick_Inventory', 'Quick_Inventory', 'Inventory', '0.1', 1),
+(5, 'Quick_Sale', 'Quick_Sale', 'Sale', '0.1', 1),
+(6, 'Quick_Purchase', 'Quick_Purchase', 'Purchase', '0.1', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -365,7 +387,7 @@ CREATE TABLE IF NOT EXISTS `definition_list_module` (
   `module_id` bigint(30) unsigned NOT NULL AUTO_INCREMENT,
   `module_code` char(2) NOT NULL,
   `module_name` varchar(20) NOT NULL,
-  `package` varchar(64) NOT NULL,
+  `package_id` varchar(64) NOT NULL,
   `module_action` varchar(50) NOT NULL,
   `inactive` tinyint(1) NOT NULL,
   `display_order` smallint(6) NOT NULL,

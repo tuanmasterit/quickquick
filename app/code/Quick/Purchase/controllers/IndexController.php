@@ -19,5 +19,6 @@ class Quick_Purchase_IndexController extends Quick_Core_Controller_Back
         
         $this->render();
     }
-
+	
+    
 }
