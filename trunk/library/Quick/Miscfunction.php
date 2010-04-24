@@ -7,7 +7,7 @@
  */
 class Quick_Miscfunction
 {
-	
+
 	/**
 	 * The length of Module name can be differrent. This make the problem of
 	 */
@@ -24,4 +24,33 @@ class Quick_Miscfunction
 		return $sb;
 
 	} // spaceToMakeTheSameWidth
+
+	public static function prnMsg($Msg,$Type='info', $Prefix=''){
+
+		echo getMsg($Msg, $Type, $Prefix);
+
+	}//prnMsg
+
+	public static function getMsg($Msg,$Type='info',$Prefix=''){
+		$Colour='';
+		switch($Type){
+			case 'error':
+				$Class = 'error';
+				$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
+				break;
+			case 'warn':
+				$Class = 'warn';
+				$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
+				break;
+			case 'success':
+				$Class = 'success';
+				$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
+				break;
+			case 'info':
+			default:
+				$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
+				$Class = 'info';
+		}
+		return '<DIV class="'.$Class.'"><B>' . $Prefix . '</B> : ' .$Msg . '</DIV>';
+	}//getMsg
 }

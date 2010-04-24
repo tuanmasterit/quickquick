@@ -52,36 +52,40 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
 			$this->view->mainMenu[$i]['spaceLenght'] = Quick_Miscfunction::spaceToMakeTheSameWidth($this->view->mainMenu[$i]['value'],$longest_module_name,'&nbsp;');
 			$i++;
 		}
-		
-		$this->view->executionMenu = Quick::single('core/execution')->getListExecutions($this->view->moduleId, $locale);
-		$i=0;
-		$longest_module_name = 0;
-		while ($i < count($this->view->executionMenu)){
-			if (mb_strlen($this->view->executionMenu[$i]['value'],'UTF-8')>$longest_module_name)
-			$longest_module_name = mb_strlen($this->view->executionMenu[$i]['value'],'UTF-8');
-			$i++;
-		}
-		$i=0;
-		while ($i < count($this->view->executionMenu)){
-			$this->view->executionMenu[$i]['spaceLenght'] = Quick_Miscfunction::spaceToMakeTheSameWidth($this->view->executionMenu[$i]['value'],$longest_module_name,'&nbsp;');
-			$i++;
+
+		if($this->view->isSetMenu){
+			$this->view->executionMenu = Quick::single('core/execution')->getListExecutions($this->view->moduleId, $locale);
+			$i=0;
+			$longest_module_name = 0;
+			while ($i < count($this->view->executionMenu)){
+				if (mb_strlen($this->view->executionMenu[$i]['value'],'UTF-8')>$longest_module_name)
+				$longest_module_name = mb_strlen($this->view->executionMenu[$i]['value'],'UTF-8');
+				$i++;
+			}
+			$i=0;
+			while ($i < count($this->view->executionMenu)){
+				$this->view->executionMenu[$i]['spaceLenght'] = Quick_Miscfunction::spaceToMakeTheSameWidth($this->view->executionMenu[$i]['value'],$longest_module_name,'&nbsp;');
+				$i++;
+			}
 		}
 
 		Zend_Auth::getInstance()->setStorage(
 		new Zend_Auth_Storage_Session('admin')
 		);
 		$this->view->startTime = microtime(true);
-		/*$this->acl = Quick::single('core/acl');
-		 if (!empty(Quick::session()->roleId)) {
-		 $this->view->userName = 'admin';
-		 $this->acl->loadRules(Quick::session()->roleId);
-		 }*/
+		$this->acl = Quick::single('core/acl');
+		// lock authenticate function
+		//if (!empty(Quick::session()->roleId)) {
+		$this->view->userName = 'admin';
+		Quick::session()->roleId = 2;
+		$this->acl->loadRules(Quick::session()->roleId);
+		//}
 	}
 
 	public function preDispatch()
 	{
 		//$this->auth();
-		//$this->checkPermission();
+		$this->checkPermission();
 	}
 
 	public function auth()
@@ -115,7 +119,7 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
 		);
 		$controller = $request->getControllerName();
 		$role = Quick::session()->roleId;
-
+		echo "$module/$controller/$action";
 		$resourceIds = explode('/', "$module/$controller/$action");
 
 		// admin is the name of parent resource_id

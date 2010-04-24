@@ -17,6 +17,7 @@ class InformerController extends Quick_Core_Controller_Back
 	public function accessDeniedAction()
 	{
 		$this->view->pageTitle = 'Access Denied';
+		$this->view->message = Quick_Miscfunction::getMsg('You do not have privileges to access this action.', 'warn');
 		$this->render();
 	}
 }

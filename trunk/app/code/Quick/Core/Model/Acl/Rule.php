@@ -8,8 +8,20 @@
  */
 class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 {
-	protected $_name = 'core_acl_rule';
+	protected $_name 				= 'definition_relation_role_function';
+	protected $_TABLE_ACL_RESOURCE 	= 'definition_list_function';
+	
+	public function getPermissionOfRules($rolesForLoad){
+		$where = $this->getAdapter()->quoteInto('role_id IN(?)', $rolesForLoad);        
 
+		$result = $this->getAdapter()->query(
+            "SELECT aru.*, arf.function_action FROM {$this->_name} aru "
+		. "LEFT JOIN {$this->_TABLE_ACL_RESOURCE} arf ON arf.function_id = aru.function_id where $where"
+		);
+		
+		return $result;
+	}
+	
 	public function getRules(){
 		$select = $this->getAdapter()->select();
 		$select->from(
