@@ -6,7 +6,7 @@
  */
 
 $router->addRoute('accountant', new Quick_Controller_Router_Route(
-    'accountant/*',
+    Quick::config()->accountant->main->accountantRoute . '/:controller/:action/*',
     array(
         'module' => 'Quick_Accountant',
         'controller' => 'index',

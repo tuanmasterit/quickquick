@@ -6,7 +6,7 @@
  */
 
 $router->addRoute('inventory', new Quick_Controller_Router_Route(
-    'inventory/*',
+    Quick::config()->inventory->main->inventoryRoute . '/:controller/:action/*',
     array(
         'module' => 'Quick_Inventory',
         'controller' => 'index',

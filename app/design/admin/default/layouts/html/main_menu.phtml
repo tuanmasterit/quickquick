@@ -4,12 +4,57 @@
 		<td class="main_menu">
 		<table class="main_menu">
 			<tr>
-				<td class='main_menu_unselected'><a href="<?php echo $this->href('sale/')?>"><?php echo _('Sales') ?></a></td>
-				<td class='main_menu_unselected'><a href="<?php echo $this->href('purchase/')?>"><?php echo _('Purchases') ?></a></td>
-				<td class='main_menu_unselected'><a href="<?php echo $this->href('inventory/')?>"><?php echo _('Inventory') ?></a></td>
-				<td class='main_menu_unselected'><a href="<?php echo $this->href('accountant/')?>"><?php echo _('Accountant') ?></a></td>
-				<td class='main_menu_unselected'><a href="<?php echo $this->href('general/')?>"><?php echo _('General Legder') ?></a></td>
-				<td class='main_menu_selected'><a href="<?php echo $this->href('/')?>"><?php echo _('System') ?></a></td>
+			<?php
+			$i=0;
+			while ($i < count($this->mainMenu)){
+				if ($this->mainMenu[$i]['module_id'] == $this->moduleId){
+					echo "<td class='main_menu_selected'>". $this->mainMenu[$i]['spaceLenght'] ."<a href='".$this->href($this->mainMenu[$i]['module_action'])."'>". $this->mainMenu[$i]['value'] ."</a>". $this->mainMenu[$i]['spaceLenght'] ."</td>";
+				} else {
+					echo "<td class='main_menu_unselected'>". $this->mainMenu[$i]['spaceLenght'] ."<a href='".$this->href($this->mainMenu[$i]['module_action'])."'>". $this->mainMenu[$i]['value'] ."</a>". $this->mainMenu[$i]['spaceLenght'] ."</td>";
+				}
+				$i++;
+			}
+			?>
+			</tr>
+		</table>
+		</td>
+	</tr>
+</table>
+<table width='100%'>
+	<tr>
+		<td valign="top" class="menu_group_area">
+		<table width="100%">
+			<tr>
+			<?php
+			$i=0;
+			while ($i < count($this->executionMenu)){
+				echo "<td class='menu_group_headers'>". $this->executionMenu[$i]['spaceLenght'];
+				echo "<table><tr>";
+				echo "<td><img src='". $this->skinUrl('/css/'. $this->themeStyle . '/images/' . $this->executionMenu[$i]['image_file']) ."' title='" . $this->executionMenu[$i]['value'] . "' alt=''></td>";
+				echo "<td class='menu_group_headers_text'>". $this->executionMenu[$i]['value'] ."</td>";
+				echo "</tr></table>". $this->executionMenu[$i]['spaceLenght'] ."</td>";
+				$i++;
+			}
+			?>
+			</tr>
+			<tr>
+			<?php
+			$i=0;
+			while ($i < count($this->executionMenu)){
+				echo "<td class='menu_group_items'>";
+				echo "<table width='100%' class='table_index'>";
+				foreach($this->executionMenu[$i]['functions'] as $function){
+					echo '<tr>';
+					echo "<td class='menu_group_item'>";
+					echo "<a href=''><li>" . $function['value'] . '</li></a>';
+					echo '</td>';
+					echo '</tr>';
+				}
+				$i++;
+				echo '</table>';
+				echo '</td>';
+			}
+			?>
 			</tr>
 		</table>
 		</td>

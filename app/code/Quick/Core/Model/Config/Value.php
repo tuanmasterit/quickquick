@@ -16,15 +16,12 @@ class Quick_Core_Model_Config_Value extends Quick_Db_Table
      * @param int $siteId
      * @return <type>
      */
-    public function getValue($path, $siteId)
+    public function getValue($path)
     {
         $where = array(
-            $this->getAdapter()->quoteInto('path = ?', $path),
-            $this->getAdapter()->quoteInto(
-                'site_id IN(?)', array_unique(array('0', $siteId))
-            )
+            $this->getAdapter()->quoteInto('path = ?', $path)            
         );
-        $row = $this->fetchRow($where, 'site_id desc');
+        $row = $this->fetchRow($where);
         if ($row) {
             return $row->value;
         }

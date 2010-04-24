@@ -28,8 +28,8 @@ class Quick_Core_Model_Cache extends Quick_Db_Table
         {
             $defaultLifetime = Quick::single('core/config_value')->fetchOne(
                 'value', 
-                'path = ? AND site_id IN (0, ?)', 
-                array('cache/main/default_lifetime', Quick::getSiteId())
+                'path = ?', 
+                array('cache/main/default_lifetime')
             );
             $frontendOptions = array(
                 'lifetime' => $defaultLifetime,

@@ -1,7 +1,7 @@
 <?php 
 /**
  * @category    Quick
- * @package     Quick_Catalog
+ * @package     Quick_Sale
  * @author   	trungpm
  */
 
