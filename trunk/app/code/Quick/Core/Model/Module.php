@@ -8,7 +8,9 @@
  */
 class Quick_Core_Model_Module extends Quick_Db_Table
 {    
-    protected $_name = 'core_module';
+    protected $_name 						= 'definition_list_module';
+    protected $_TABLE_CORE_MODULE_LANGUAGE 	= 'core_module_language';
+    protected $_TABLE_CORE_LANGUAGE 		= 'core_language';
     
     private $_processed_modules = null;
     
@@ -19,14 +21,43 @@ class Quick_Core_Model_Module extends Quick_Db_Table
      */
     public function getList($where = null)
     {
-        $query = "SELECT cm.code, cm.*
-            FROM {$this->_name} AS cm";
+        $query = "SELECT cm.package  
+            FROM {$this->_name} AS cm ";
         
         if (null !== $where) {
             $query .= " WHERE {$where}";
         }
         
+        $query .= ' ORDER BY load_route_order ASC';
+        
         return $this->getAdapter()->fetchAssoc($query);
+    }
+    
+	/**
+     * Retrieve array of installed modules
+     * 
+     * @return array
+     */
+    public function getListModules($locale)
+    {    	
+    	$select = $this->getAdapter()->select();
+		$select->from(
+		array('cm' => $this->_name),
+		array('cm.module_id', 'cm.package', 'cm.module_action'))
+		->joinLeft(
+				array('cml' => $this->_TABLE_CORE_MODULE_LANGUAGE),
+				"cml.record_id = cm.module_id", 
+				array('cml.language_id', 'cml.value'))
+		->joinLeft(
+				array('cl' => 'core_language'), 
+				"cl.id = cml.language_id", 
+				array())
+		->where('cm.inactive = ?', 0)
+		->where('cl.locale = ?', $locale)
+		->where('cml.table_name = ?', $this->_name)
+		->order('cm.display_order');
+
+		return $this->getAdapter()->fetchAll($select->__toString());
     }
     
     /**

@@ -28,9 +28,7 @@ class Quick_Core_Model_Config_Field extends Quick_Db_Table
                 "SELECT f.path, f.config_type, v.value, f.model " .
                 "FROM {$this->_name} f " .
                 "INNER JOIN " . self::$_db_prefix . "core_config_value v ON v.config_field_id = f.id " .
-                "WHERE f.path LIKE '{$key}/%' AND v.site_id IN('0', ?) " .
-                "ORDER BY v.site_id",
-                $siteId
+                "WHERE f.path LIKE '{$key}/%' " 
             );
 
             if ($hasCache) {

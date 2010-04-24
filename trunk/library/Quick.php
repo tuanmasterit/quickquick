@@ -199,7 +199,7 @@ class Quick
             return Zend_Registry::get('modules');
         }
         if (!$modules = self::cache()->load('modules_list')) {
-            $list = Quick::single('core/module')->getList('is_active = 1');            
+            $list = Quick::single('core/module')->getList('inactive = 0');            
             $result = array();
             foreach ($list as $moduleCode => $values) {
                 list($category, $module) = explode('_', $moduleCode, 2);

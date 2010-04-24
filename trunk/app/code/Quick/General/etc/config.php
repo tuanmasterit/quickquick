@@ -10,6 +10,7 @@ $config = array(
         'package' => 'Quick_General',
         'name' => 'General',
         'version' => '0.1',
-        'required' => 1
+        'required' => 1,
+		'idInDb' => 8 // id of package in database
     )
 );

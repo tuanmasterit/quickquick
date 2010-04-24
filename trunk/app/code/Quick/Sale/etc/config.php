@@ -10,6 +10,7 @@ $config = array(
         'package' => 'Quick_Sale',
         'name' => 'Sale',
         'version' => '0.1',
-        'required' => 1
+        'required' => 1,
+		'idInDb' => 5 // id of package in database
     )
 );

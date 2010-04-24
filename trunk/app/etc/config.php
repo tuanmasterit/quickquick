@@ -16,7 +16,7 @@ $config = array(
         'host'     => 'localhost',
         'username' => 'root',
         'password' => '',
-        'dbname'   => 'quickdb',
+        'dbname'   => 'quickquickdb',
         'prefix'   => ''
         ),
 

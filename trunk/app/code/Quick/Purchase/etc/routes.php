@@ -6,7 +6,7 @@
  */
 
 $router->addRoute('purchase', new Quick_Controller_Router_Route(
-    'purchase/*',
+    Quick::config()->purchase->main->purchaseRoute . '/:controller/:action/*',
     array(
         'module' => 'Quick_Purchase',
         'controller' => 'index',
