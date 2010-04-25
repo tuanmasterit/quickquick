@@ -29,7 +29,7 @@ class Quick_Core_Model_Acl extends Zend_Acl
     
     public function getResources(){
     	if(null === $this->_rescs){
-    		$this->_rescs = Quick::single('core/acl_resource')->fetchAll(null, 'display_order ASC')->toArray();
+    		$this->_rescs = Quick::single('core/function')->fetchAll(null, 'display_order ASC')->toArray();
     	}
     	
     	return $this->_rescs;

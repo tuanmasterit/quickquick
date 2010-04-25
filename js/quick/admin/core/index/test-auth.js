@@ -33,7 +33,7 @@ Ext.onReady(function(){
                         Ext.getCmp('grid').store.reader = new Ext.data.JsonReader({
                             root: 'data',
                             totalProperty: 'count',
-                            id: 'resource_id'
+                            id: 'function_id'
                         }, test_object);
                         
                         Ext.getCmp('grid').store.load();                     
@@ -126,10 +126,10 @@ Ext.onReady(function(){
     }
     
     var record = [{
-        name: 'resource_id',
+        name: 'function_id',
         type: 'string'
     }, {
-        name: 'title_key',
+        name: 'function_value',
         type: 'string'
     }, {
         name: 'package',
@@ -150,10 +150,11 @@ Ext.onReady(function(){
         reader: new Ext.data.JsonReader({
             root: 'data',
             totalProperty: 'count',
-            id: 'resource_id'
+            id: 'function_id'
         }, test_object),
         proxy: new Ext.data.HttpProxy({
-            url: Quick.baseUrl + Quick.adminUrl + 'test/test-get-resources'
+            //url: Quick.baseUrl + Quick.adminUrl + 'test/test-get-resources'
+			url: Quick.baseUrl + Quick.adminUrl + Quick.requestUrl + '/getLoadData/1' 
         }),
         sortInfo: {
             field: 'package',
@@ -185,8 +186,8 @@ Ext.onReady(function(){
         renderer: change
     }, {
         header: 'Function',
-        dataIndex: 'title_key',
-        //width: 300
+        dataIndex: 'function_value',
+        width: 250,
         autoWidth: true
     });
     

@@ -15,7 +15,6 @@ class Quick_Inventory_IndexController extends Quick_Core_Controller_Back
 
 	public function indexAction()
     {
-        $this->view->pageTitle = 'Inventory';
         
         $this->render();
     }

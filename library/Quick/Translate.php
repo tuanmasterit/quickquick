@@ -30,17 +30,17 @@ class Quick_Translate
      *
      * @var string
      */
-    private static $_module = 'Quick_Core';
+    private static $_table = 'definition_list_function';
 
     /**
      * Current module
      *
      * @param string $module [optional]
      */
-    public function __construct($module = 'Quick_Core')
+    public function __construct($_table = 'definition_list_function')
     {
         $this->_locale = Quick_Locale::getLocale()->toString();
-        self::$_module = $module;
+        self::$_table = $_table;
     	if (!Quick::config()->translation->main->autodetect) {
              Zend_Translate::setCache(Quick::cache());
         }   
@@ -53,18 +53,10 @@ class Quick_Translate
      * @static
      * @return Quick_Translate
      */
-    public static function getInstance($module = 'Quick_Core')
+    public static function getInstance($_table = 'definition_list_function')
     {
         if (null === self::$_instance) {
-            self::$_instance = new self($module);
-        } elseif (self::$_module !== $module) {
-            
-            if (!in_array($module, array_keys(Quick::getModules()))) {
-                throw new Quick_Exception(
-                    'Translate error : module ' . $module . ' not exist'
-                );
-            }
-            self::$_module = $module;
+            self::$_instance = new self($_table);
         }
         return self::$_instance;
     }
@@ -76,12 +68,12 @@ class Quick_Translate
      */
     public function translate(array $args)
     {
-        $text = array_shift($args);
+        $key = array_shift($args);
         
         if (!count($args)) {
-        	return Quick::single('core/module_language')->getTranslatedValue(self::$_module, $this->_locale, $text);
+        	return Quick::single('core/module_language')->getTranslatedValue(self::$_table, $this->_locale, $key);
         }
-        return null;        
+        return null;
     }
     
 	/**

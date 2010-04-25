@@ -10,6 +10,7 @@ $this->headScript()
 ->appendFile('js/quick/admin/core/index/user.js');
 ?>
 <?php echo $this->formHidden('selectedFunction', '0');?>
+<br />
 <div id="tabs1">				       
 	<div id="role" class="x-hide-display">
         <div id="test-grid" style="text-align:left;"></div>
@@ -18,7 +19,7 @@ $this->headScript()
 		<div id="gird-user" style="text-align:left;"></div>	
     </div>
 </div>
-
+<br />
 <div id="div-form-role">
     <?php echo $this->render('index/edit-role.phtml');?>
 </div>
