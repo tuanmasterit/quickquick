@@ -63,13 +63,19 @@ abstract class Quick_Controller_Action extends Zend_Controller_Action
 
 		$view->templateName = $template['name'];
 		$view->applicationName = $app;
+		
 		$module = $this->getRequest()->getModuleName();		
-		list($category, $module) = explode('_', $module, 2);
+		list($category, $module) = explode(
+                '_', strtolower($this->getRequest()->getModuleName()), 2
+		);
 		$view->moduleCategory = $category;
 		$view->moduleName = $module;
+		$action = $this->getRequest()->getActionName();		
+		$controller = $this->getRequest()->getControllerName();		
+		$view->request = "$module/$controller/$action";
 		
 		$view->isSetMenu = false;
-		if($this->getRequest()->getControllerName() == 'index')
+		if($controller == 'index')
 			$view->isSetMenu = true;
 
 		$view->path = $systemPath;

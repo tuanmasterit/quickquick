@@ -15,7 +15,6 @@ class Quick_General_IndexController extends Quick_Core_Controller_Back
 
 	public function indexAction()
     {
-        $this->view->pageTitle = 'General';
         
         $this->render();
     }

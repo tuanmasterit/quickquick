@@ -13,6 +13,15 @@ $router->addRoute('core', new Quick_Controller_Router_Route(
     )
 ));
 
+$router->addRoute('core-remote', new Quick_Controller_Router_Route(
+    'core/:controller/:action/*',
+    array(
+        'module' => 'Quick_Core',
+        'controller' => 'index',
+        'action' => 'index'
+    )
+));
+
 $router->addRoute('core_auth', new Quick_Controller_Router_Route(
     Quick::config()->auth->main->authRoute . '/:action/*',
     array(

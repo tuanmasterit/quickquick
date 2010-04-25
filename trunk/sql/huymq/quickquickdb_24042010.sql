@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.0.1
+-- version 3.1.3.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 24, 2010 at 06:44 AM
--- Server version: 5.1.37
--- PHP Version: 5.3.0
+-- Generation Time: Apr 25, 2010 at 03:02 PM
+-- Server version: 5.1.33
+-- PHP Version: 5.2.9
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -278,6 +278,7 @@ INSERT INTO `core_module_language` (`language_id`, `table_name`, `field_name`, `
 (1, 'definition_list_function', '', 4, 'Present Condition Inventory'),
 (1, 'definition_list_function', '', 5, 'Survival Fund'),
 (1, 'definition_list_function', '', 6, 'Purchase History'),
+(1, 'definition_list_function', '', 7, 'Purchase'),
 (1, 'definition_list_module', '', 1, 'Purchase'),
 (1, 'definition_list_module', '', 3, 'Inventory'),
 (1, 'definition_list_module', '', 4, 'Accountant'),
@@ -295,6 +296,7 @@ INSERT INTO `core_module_language` (`language_id`, `table_name`, `field_name`, `
 (2, 'definition_list_function', '', 4, 'Hiện trạng tồn kho'),
 (2, 'definition_list_function', '', 5, 'Hiện trạng tồn quỹ'),
 (2, 'definition_list_function', '', 6, 'Lịch sử mua hàng'),
+(2, 'definition_list_function', '', 7, 'Mua Hàng'),
 (2, 'definition_list_module', '', 1, 'Mua Hàng'),
 (2, 'definition_list_module', '', 3, 'Nhập xuất tồn kho'),
 (2, 'definition_list_module', '', 4, 'Hạch toán kế toán'),
@@ -381,13 +383,13 @@ CREATE TABLE IF NOT EXISTS `definition_list_department` (
 --
 
 INSERT INTO `definition_list_department` (`department_id`, `subject_id`, `department_code`, `department_name`, `department_function`, `inactive`, `created_by_userid`, `date_entered`, `last_modified_by_userid`, `date_last_modified`) VALUES
-(1, 1, '', '', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(2, 2, 'KT', 'Kế toán', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(3, 2, 'KD', 'Kinh doanh', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(4, 2, 'MH', 'Mua hàng', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(5, 2, 'KH', 'Kho hàng', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(6, 2, 'GN', 'Giao nhận', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(7, 2, 'HC', 'Hành chính nhân sự', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
+(1, 1, '', '', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(2, 2, 'KT', 'Kế toán', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(3, 2, 'KD', 'Kinh doanh', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(4, 2, 'MH', 'Mua hàng', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(5, 2, 'KH', 'Kho hàng', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(6, 2, 'GN', 'Giao nhận', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(7, 2, 'HC', 'Hành chính nhân sự', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -459,8 +461,8 @@ INSERT INTO `definition_list_function` (`function_id`, `execution_id`, `function
 (4, 1, 'HTTK', 'Hiện trạng tồn kho', 'purchase/maintenance/present-inventory', 0, 4, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
 (5, 1, 'HTTQ', 'Hiện trạng tồn quỹ', 'purchase/maintenance/survival-fund', 0, 5, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
 (6, 1, 'LSMH', 'Lịch sử mua hàng', 'purchase/maintenance/purchase-history', 0, 6, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(7, 1, '', 'Purchase Module', 'purchase', 0, 0, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(8, 1, '', 'Purchase Maintenance', 'purchase/maintenance', 0, 0, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
+(7, 1, '', 'Purchase Module', 'purchase', 1, 0, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(8, 1, '', 'Purchase Maintenance', 'purchase/maintenance', 1, 0, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -528,7 +530,7 @@ CREATE TABLE IF NOT EXISTS `definition_list_role` (
 
 INSERT INTO `definition_list_role` (`role_id`, `department_id`, `role_code`, `role_name`, `inactive`, `created_by_userid`, `date_entered`, `last_modified_by_userid`, `date_last_modified`) VALUES
 (1, 1, '', '', 1, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(2, 1, 'VTM', 'Toàn quyền', 0, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
+(2, 1, 'VTM', 'Administrator', 0, 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -567,8 +569,8 @@ CREATE TABLE IF NOT EXISTS `definition_list_staff` (
 --
 
 INSERT INTO `definition_list_staff` (`staff_id`, `staff_code`, `first_name`, `middle_name`, `last_name`, `birth_date`, `id_number`, `id_issuing_office`, `id_issuing_date`, `social_number`, `resident_address`, `contact_address`, `home_phone`, `cell_phone`, `email`, `inactive`, `created_by_userid`, `date_entered`, `last_modified_by_userid`, `date_last_modified`) VALUES
-(1, '', '', '', '', '1900-01-01 00:00:00', '', '', '1900-01-01 00:00:00', '', '', '', '', '', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(2, 'VTM', 'Nhân viên', '', 'VTM', '1900-01-01 00:00:00', '', '', '1900-01-01 00:00:00', '', '', '', '', '', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
+(1, '', '', '', '', '1900-01-01 00:00:00', '', '', '1900-01-01 00:00:00', '', '', '', '', '', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(2, 'VTM', 'Nhân viên', '', 'VTM', '1900-01-01 00:00:00', '', '', '1900-01-01 00:00:00', '', '', '', '', '', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -603,8 +605,8 @@ CREATE TABLE IF NOT EXISTS `definition_list_subject` (
 --
 
 INSERT INTO `definition_list_subject` (`subject_id`, `subject_code`, `subject_name`, `subject_address`, `subject_tax_code`, `is_software_user`, `is_manufacturer`, `is_supplier`, `is_customer`, `is_government`, `is_bank`, `inactive`, `created_by_userid`, `date_entered`, `last_modified_by_userid`, `date_last_modified`) VALUES
-(1, '', '', '', '', b'0', b'0', b'0', b'0', b'0', b'0', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(2, 'N2H', 'Công ty Nhanh Nhanh', '', '', b'1', b'0', b'1', b'1', b'0', b'0', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
+(1, '', '', '', '', '\0', '\0', '\0', '\0', '\0', '\0', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(2, 'N2H', 'Công ty Nhanh Nhanh', '', '', '', '\0', '', '', '\0', '\0', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -635,8 +637,8 @@ CREATE TABLE IF NOT EXISTS `definition_list_user` (
 --
 
 INSERT INTO `definition_list_user` (`user_id`, `staff_id`, `role_id`, `user_name`, `password`, `inactive`, `created_by_userid`, `date_entered`, `last_modified_by_userid`, `date_last_modified`) VALUES
-(1, 1, 1, '', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
-(2, 2, 2, 'nguoi_dung', '', b'0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
+(1, 1, 1, '', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00'),
+(2, 2, 2, 'nguoi_dung', '', '\0', 1, '1900-01-01 00:00:00', 1, '1900-01-01 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -799,7 +801,3 @@ ALTER TABLE `definition_list_user`
 ALTER TABLE `definition_relation_role_function`
   ADD CONSTRAINT `fk_relation_function` FOREIGN KEY (`function_id`) REFERENCES `definition_list_function` (`function_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_relation_role` FOREIGN KEY (`role_id`) REFERENCES `definition_list_role` (`role_id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

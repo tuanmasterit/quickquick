@@ -8,8 +8,10 @@
  */
 class Quick_Core_Model_Module_Language extends Quick_Db_Table
 {
-	protected $_name = 'core_module_language';
-	protected $_rowClass = 'Quick_Db_Table_Row';
+	protected $_name 						= 'core_module_language';
+	protected $_TABLE_CORE_LANGUAGE			= 'core_language';
+	protected $_TABLE_DEFINITION_FUNCTION 	= 'definition_list_function';
+	protected $_rowClass 					= 'Quick_Db_Table_Row';
 
 	/**
 	 * Retrieve the value for translation
@@ -19,22 +21,23 @@ class Quick_Core_Model_Module_Language extends Quick_Db_Table
 	 * @param string $key
 	 * @return translated value
 	 */
-	public function getTranslatedValue($module, $locale, $key){
+	public function getTranslatedValue($table, $locale, $key){
 		$select = $this->getAdapter()->select();
 		$select->from(
-					array('cml' => $this->_name), 
-					array('cml.key', 'cml.value'))
-				->joinLeft(
-					array('cm' => 'core_module'), 
-					"cm.id = cml.module_id", 
-					array('package'))
-				->joinLeft(
-					array('cl' => 'core_language'), 
+			array('cf' => $this->_TABLE_DEFINITION_FUNCTION),
+			array('cf.function_action'))
+		->joinLeft(
+			array('cml' => $this->_name),
+					"cml.record_id = cf.function_id", 
+			array('cml.value'))
+		->joinLeft(
+			array('cl' => 'core_language'),
 					"cl.id = cml.language_id", 
-					array('locale'))
-				->where('cm.package = ?', $module)
-				->where('cl.locale = ?', $locale)
-				->where('cml.key = ?', $key);
+			array())
+		->where('cf.function_action = ?', $key)
+		->where('cl.locale = ?', $locale)
+		->where('cml.table_name = ?', $table)
+		->order('cf.display_order');
 		$rows = $select->query()->fetch();
 		return $rows['value'];
 	}

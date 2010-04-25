@@ -10,6 +10,8 @@ class LanguageController extends Quick_Core_Controller_Back
 {
     public function init()
     {
+    	$this->_disableAcl = true;
+    	$this->_disableAuth = true;
         parent::init();        
     }
     
