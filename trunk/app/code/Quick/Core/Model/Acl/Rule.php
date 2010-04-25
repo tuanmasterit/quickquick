@@ -10,6 +10,7 @@ class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 {
 	protected $_name 				= 'definition_relation_role_function';
 	protected $_TABLE_ACL_RESOURCE 	= 'definition_list_function';
+	protected $_TABLE_ACL_ROLE		= 'definition_list_role';
 	
 	public function getPermissionOfRules($rolesForLoad){
 		$where = $this->getAdapter()->quoteInto('role_id IN(?)', $rolesForLoad);        
@@ -38,12 +39,11 @@ class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 	public function getRulesWithRoles(){
 		$select = $this->getAdapter()->select();
 		$select->from(
-		array('cr' => $this->_name),
-		array('cr.resource_id', 'permission'))
+			array('cr' => $this->_name),
+			array('cr.function_id', 'permission'))
 		->joinLeft(
-		array('crl' => 'core_acl_role'),
-					"crl.id = cr.role_id", 
-		array('crl.role_name'));
+			array('crl' => $this->_TABLE_ACL_ROLE), "crl.role_id = cr.role_id", 
+			array('crl.role_name'));
 		return $this->getAdapter()->fetchAll($select->__toString());
 	}
 
