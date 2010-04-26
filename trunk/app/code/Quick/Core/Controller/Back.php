@@ -75,7 +75,7 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
 		);
 		$this->view->startTime = microtime(true);
 		$this->acl = Quick::single('core/acl');
-		// lock authenticate function
+		// lock login function
 		//if (!empty(Quick::session()->roleId)) {
 		$this->view->userName = 'admin';
 		Quick::session()->roleId = 2;
@@ -85,8 +85,9 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
 
 	public function preDispatch()
 	{
+		// Lock Authenticate permission
 		//$this->auth();
-		//$this->checkPermission();
+		//$this->checkPermission(); 
 	}
 
 	public function auth()
