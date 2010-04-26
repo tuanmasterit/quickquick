@@ -189,7 +189,7 @@ abstract class Quick_Db_Table_Abstract extends Zend_Db_Table_Abstract
      */
     public function cache()
     {
-        $frontend = Quick::single('Quick_Cache_Frontend_Query');
+        $frontend = Quick::single('Quick_Cache_Backend_Query');
 
         if (func_num_args()) {
             $args = serialize(func_get_args());
