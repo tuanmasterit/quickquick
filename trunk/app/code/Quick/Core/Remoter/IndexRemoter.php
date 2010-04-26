@@ -1,22 +1,22 @@
 <?php
 /**
- * 
+ *
  * @category    Quick
  * @package     Quick_Core
  * @author      trungpm
  */
 class Quick_Core_Remoter_IndexRemoter{
-	
+
 	/**
-     * Retrieve Resource object for permission asignment
-     *    
-     * @return object Quick_Config|mixed
-     */
-    public static function getResources()
-    {
-        $result = array();
-		$resources = Quick::single('core/function')->getFunctions(Quick_Locale::getLocale());
-		$roles = Quick::single('core/acl_role')->getRoles();
+	 * Retrieve Resource object for permission asignment
+	 *
+	 * @return array Functions|mixed
+	 */
+	public static function getResources()
+	{
+		$result = array();
+		$resources = Quick::single('core/function')->cache()->getFunctions(Quick_Locale::getLocale());
+		$roles = Quick::single('core/acl_role')->cache()->getRoles();
 		$i = 0;
 		foreach ($resources as $resource) {
 			foreach ($roles as $role) {
@@ -24,7 +24,7 @@ class Quick_Core_Remoter_IndexRemoter{
 			}
 			$i++;
 		}
-		$rules = Quick::single('core/acl_rule')->getRulesWithRoles();
+		$rules = Quick::single('core/acl_rule')->cache()->getRulesWithRoles();
 		$i = 0;
 		foreach ($resources as $resource) {
 			foreach ($rules as $rule) {
@@ -40,5 +40,5 @@ class Quick_Core_Remoter_IndexRemoter{
 			}
 		}
 		return $result;
-    }
+	}
 }

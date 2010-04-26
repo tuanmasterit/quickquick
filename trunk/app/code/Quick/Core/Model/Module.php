@@ -49,7 +49,7 @@ class Quick_Core_Model_Module extends Quick_Db_Table
 				"cml.record_id = cm.module_id", 
 				array('cml.language_id', 'cml.value'))
 		->joinLeft(
-				array('cl' => 'core_language'), 
+				array('cl' => $this->_TABLE_CORE_LANGUAGE), 
 				"cl.id = cml.language_id", 
 				array())
 		->where('cm.inactive = ?', 0)

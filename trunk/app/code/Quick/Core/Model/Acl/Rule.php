@@ -40,7 +40,7 @@ class Quick_Core_Model_Acl_Rule extends Quick_Db_Table
 		$select = $this->getAdapter()->select();
 		$select->from(
 			array('cr' => $this->_name),
-			array('cr.function_id', 'permission'))
+			array('cr.role_id', 'cr.function_id', 'permission'))
 		->joinLeft(
 			array('crl' => $this->_TABLE_ACL_ROLE), "crl.role_id = cr.role_id", 
 			array('crl.role_name'));

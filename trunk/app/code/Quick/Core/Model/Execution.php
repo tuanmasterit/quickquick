@@ -28,7 +28,7 @@ class Quick_Core_Model_Execution extends Quick_Db_Table
 					"cml.record_id = cm.execution_id", 
 			array('cml.language_id', 'cml.value'))
 		->joinLeft(
-			array('cl' => 'core_language'),
+			array('cl' => $this->_TABLE_CORE_LANGUAGE),
 					"cl.id = cml.language_id", 
 			array())
 		->where('cm.module_id = ?', $moduleId)
