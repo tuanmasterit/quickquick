@@ -37,10 +37,10 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
 		$this->view->adminUrl = Quick::config()->system->adminurl;
 		$locale = Quick_Locale::getLocale()->toString();
 		$module = $this->getRequest()->getModuleName();
-		$configModule = Quick::single('core/module')->getConfig($module);
+		$configModule = Quick::single('core/module')->cache()->getConfig($module);
 		$this->view->moduleId = $configModule[$module]['idInDb'];
 
-		$this->view->mainMenu = Quick::single('core/module')->getListModules($locale);
+		$this->view->mainMenu = Quick::single('core/module')->cache()->getListModules($locale);
 		$i=0;
 		$longest_module_name = 0;
 		while ($i < count($this->view->mainMenu)){
@@ -55,19 +55,20 @@ abstract class Quick_Core_Controller_Back extends Quick_Controller_Action
 		}
 
 		if($this->view->isSetMenu){
-			$this->view->executionMenu = Quick::single('core/execution')->getListExecutions($this->view->moduleId, $locale);
-			$i=0;
-			$longest_module_name = 0;
-			while ($i < count($this->view->executionMenu)){
-				if (mb_strlen($this->view->executionMenu[$i]['value'],'UTF-8')>$longest_module_name)
-				$longest_module_name = mb_strlen($this->view->executionMenu[$i]['value'],'UTF-8');
+			$this->view->executionMenu = Quick::single('core/execution')->cache()->getListExecutions($this->view->moduleId, $locale);						
+			$i=1;
+			$executionMenu = array();
+			$j = 0;
+			while ($i <= count($this->view->executionMenu)){
+				if(($i % 5) != 0){
+					$executionMenu[$j][] = $this->view->executionMenu[$i-1];
+				}else{
+					$executionMenu[$j][] = $this->view->executionMenu[$i-1];
+					$j++;
+				}
 				$i++;
 			}
-			$i=0;
-			while ($i < count($this->view->executionMenu)){
-				$this->view->executionMenu[$i]['spaceLenght'] = Quick_Miscfunction::spaceToMakeTheSameWidth($this->view->executionMenu[$i]['value'],$longest_module_name,'&nbsp;');
-				$i++;
-			}
+			$this->view->executionMenu = $executionMenu;
 		}
 
 		Zend_Auth::getInstance()->setStorage(

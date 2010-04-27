@@ -15,13 +15,13 @@ class Quick_Purchase_MaintenanceController extends Quick_Core_Controller_Back
 
 	public function productGroupAction()
 	{
-		
+
 		$this->render();
 	}
 
 	public function productCatalogAction()
 	{
-		
+
 		$this->render();
 	}
 }

@@ -20,7 +20,11 @@
 		</td>
 	</tr>
 </table>
-<?php if($this->isSetMenu) {?>
+			<?php
+			if($this->isSetMenu) {
+				$j=0;
+				while ($j < count($this->executionMenu)){
+					?>
 <table width='100%'>
 	<tr>
 		<td valign="top" class="menu_group_area">
@@ -28,12 +32,12 @@
 			<tr>
 			<?php
 			$i=0;
-			while ($i < count($this->executionMenu)){
-				echo "<td class='menu_group_headers'>". $this->executionMenu[$i]['spaceLenght'];
+			while ($i < count($this->executionMenu[$j])){
+				echo "<td class='menu_group_headers' width='20%'>";
 				echo "<table><tr>";
-				echo "<td><img src='". $this->skinUrl('/css/'. $this->themeStyle . '/images/' . $this->executionMenu[$i]['image_file']) ."' title='" . $this->executionMenu[$i]['value'] . "' alt=''></td>";
-				echo "<td class='menu_group_headers_text'>". $this->executionMenu[$i]['value'] ."</td>";
-				echo "</tr></table>". $this->executionMenu[$i]['spaceLenght'] ."</td>";
+				echo "<td><img src='". $this->skinUrl('/css/'. $this->themeStyle . '/images/' . $this->executionMenu[$j][$i]['image_file']) ."' title='" . $this->executionMenu[$j][$i]['value'] . "' alt=''></td>";
+				echo "<td class='menu_group_headers_text'>". $this->executionMenu[$j][$i]['value'] ."</td>";
+				echo "</tr></table></td>";
 				$i++;
 			}
 			?>
@@ -41,10 +45,10 @@
 			<tr>
 			<?php
 			$i=0;
-			while ($i < count($this->executionMenu)){
-				echo "<td class='menu_group_items'>";
+			while ($i < count($this->executionMenu[$j])){
+				echo "<td class='menu_group_items' width='20%'>";
 				echo "<table width='100%' class='table_index'>";
-				foreach($this->executionMenu[$i]['functions'] as $function){
+				foreach($this->executionMenu[$j][$i]['functions'] as $function){
 					echo '<tr>';
 					echo "<td class='menu_group_item'>";
 					echo "<a href='". $this->href($function['function_action']) ."'><li>" . $function['value'] . '</li></a>';
@@ -61,4 +65,10 @@
 		</td>
 	</tr>
 </table>
+					<?php
+					$j++;
+				}
+
+				?>
+
 <?php }?>
