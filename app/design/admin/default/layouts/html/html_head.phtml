@@ -38,7 +38,7 @@ $this->headScript()->offsetSetFile(-97, 'js/quick/admin/core/translate.js');
 
 $locale = Quick_Locale::getLocale()->toString();
 $this->headScript()
-->appendFile('js/quick/admin/translation/'. $locale .'/core.js');
+->appendFile('js/quick/admin/translation/'. $locale .'/'. $this->moduleName .'.js');
 
 $language = Quick_Locale::getLocale()->getLanguage();
 if (file_exists('js/extjs/src/locale/ext-lang-' . $language . '.js')) {

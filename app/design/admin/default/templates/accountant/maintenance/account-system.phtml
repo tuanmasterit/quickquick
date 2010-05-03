@@ -1,0 +1,28 @@
+<?php
+$this->headScript()
+->appendFile('js/quick/admin/accountant/maintenance/accountant-system-form.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/maintenance/accountant-system-tree.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/maintenance/accountant-system.js');
+?>
+
+<style type="text/css">
+
+    .x-panel-body .x-panel-body-noheader .x-panel-body-noborder{background-color:#fff;}	
+
+	#tree {
+        float:left;
+        margin:20px;
+        border:1px solid #c3daf9;
+	}
+	
+	.tree-new-icon .x-tree-node-icon{background-image:url(none);}
+	.icon-node-parent .x-tree-node-icon{background-image:url(none);}
+	.icon-form{background: url(<?php echo $this->skinUrl('/images/icons/Dialog.ico') ?>) 0 4px no-repeat !important; }
+</style>
+
+<div id="tabs1" style="margin: 0 auto; width:855px; margin-top: 10px; text-align: left;">
+	<div id="AccountantSystemTables"></div>
+</div>
+<br />
