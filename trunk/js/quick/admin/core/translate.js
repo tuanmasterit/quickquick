@@ -25,7 +25,7 @@ String.prototype.translator = function(module_code){
     if (module_code != undefined) {
         module = module_code;
     }
-	console.debug(Locale);
+
     if (!Locale[module]) {
         localized = '__module not found__';//key;
     } else {		
