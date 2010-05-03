@@ -218,7 +218,8 @@ class Quick_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
 		return $front; // this is *VERY* important
 	}
-
+	
+	/*
 	protected function _initZFDebug()
 	{
 		//return;
@@ -263,5 +264,5 @@ class Quick_Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$this->bootstrap('FrontController');
 		$frontController = $this->getResource('FrontController');
 		$frontController->registerPlugin($debug);
-	}
+	}*/
 }
