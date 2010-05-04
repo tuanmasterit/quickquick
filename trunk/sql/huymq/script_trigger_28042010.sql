@@ -1,4 +1,4 @@
---
+﻿--
 -- Triggers `definition_list_account`
 --
 DROP TRIGGER IF EXISTS `quickquickdb`.`makeAccountTree`;
@@ -62,5 +62,4 @@ END
 //
 DELIMITER ;
 
-UPDATE `quickquickdb`.`definition_list_account` SET `account_name` = 'H? th?ng t�i kho?n k? to�n',
-`inactive` = b '0' WHERE `definition_list_account`.`account_id` =1 LIMIT 1 ;
+UPDATE `quickquickdb`.`definition_list_account` SET `account_name` = 'Hệ thống tài khoản kế toán',`inactive` = 0 WHERE `definition_list_account`.`account_id` =1 LIMIT 1 ;
