@@ -48,7 +48,10 @@ Ext.onReady(function(){
         },
         
         add: function(){
-        
+            $('#div-form-subject').css('display', 'block');
+            editSubjectWin.setTitle('Edit Subject');
+            editSubjectWin.show();
+            editSubjectWin.doLayout();
         },
         
         remove: function(){
@@ -156,22 +159,27 @@ Ext.onReady(function(){
         dataIndex: 'is_software_user',
         width: 100
     });
-	var checkSupplier = new Ext.grid.CheckColumn({
+	var checkProducer = new Ext.grid.CheckColumn({
+        header: 'Producer',
+        dataIndex: 'is_producer',
+        width: 100
+    });
+    var checkSupplier = new Ext.grid.CheckColumn({
         header: 'Supplier',
         dataIndex: 'is_supplier',
         width: 100
     });
-	var checkCustomer = new Ext.grid.CheckColumn({
+    var checkCustomer = new Ext.grid.CheckColumn({
         header: 'Customer',
         dataIndex: 'is_customer',
         width: 100
     });
-	var checkGovernment = new Ext.grid.CheckColumn({
+    var checkGovernment = new Ext.grid.CheckColumn({
         header: 'Government',
         dataIndex: 'is_government',
         width: 100
     });
-	var checkBank = new Ext.grid.CheckColumn({
+    var checkBank = new Ext.grid.CheckColumn({
         header: 'Bank',
         dataIndex: 'is_bank',
         width: 100
@@ -230,8 +238,7 @@ Ext.onReady(function(){
     }, this);
     
     var tbar = new Ext.Toolbar({
-        items: [{
-            id: 'add_subject',
+        items: [{           
             text: 'Add',
             cls: 'x-btn-text-icon',
             icon: Quick.skinUrl + '/images/icons/add.png',
@@ -260,8 +267,7 @@ Ext.onReady(function(){
             text: 'Find',
             tooltip: 'Find Subject Name',
             cls: 'x-btn-text-icon',
-            icon: Quick.skinUrl + '/images/icons/find.png',
-            id: 'find_subject',
+            icon: Quick.skinUrl + '/images/icons/find.png',            
             handler: Subject.find
         }]
     });
@@ -317,7 +323,7 @@ Ext.onReady(function(){
             width: 100,
             renderer: render_currency_name,
             editor: comboCurrencyGird
-        }, checkSoftware, checkSupplier, checkCustomer, checkGovernment, checkBank]
+        }, checkSoftware, checkProducer, checkSupplier, checkCustomer, checkGovernment, checkBank]
     });
     // by default columns are sortable
     cm2.defaultSortable = true;
@@ -366,12 +372,11 @@ Ext.onReady(function(){
     
     /* Creating popup windows */
     editSubjectWin = new Ext.Window({
-        items: [//tabsWraper
-]        ,
+        items: [tabsWraper],
         layout: 'border',
         constrainHeader: true,
-        height: 665,
-        width: 562,
+        height: 371,
+        width: 567,
         closeAction: 'hide',
         maximizable: true,
         border: false,
