@@ -221,8 +221,7 @@ Ext.onReady(function(){
     }, this);
     
     var tbar_tab = new Ext.Toolbar({
-        items: [{
-            id: 'add_subject',
+        items: [{            
             text: 'Add',
             cls: 'x-btn-text-icon',
             icon: Quick.skinUrl + '/images/icons/add.png',
@@ -237,7 +236,7 @@ Ext.onReady(function(){
             text: 'Subject Name'
         }, {
             xtype: 'textfield',
-            id: 'SearchSubjectName',
+            id: 'srchSubjectName',
             width: 200,
             listeners: {
                 specialkey: function(s, e){
@@ -251,8 +250,7 @@ Ext.onReady(function(){
             text: 'Find',
             tooltip: 'Find Subject Name',
             cls: 'x-btn-text-icon',
-            icon: Quick.skinUrl + '/images/icons/find.png',
-            id: 'find_subject',
+            icon: Quick.skinUrl + '/images/icons/find.png',            
             handler: SubjectTab.find
         }]
     });

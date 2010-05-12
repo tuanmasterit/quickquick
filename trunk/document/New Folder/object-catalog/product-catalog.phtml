@@ -1,0 +1,42 @@
+<?php
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog/tree-property.js');
+/*$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog/tab-form.js');*/
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog/tab.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog/tree.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog/form.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog/list.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/product-catalog.js');
+?>
+<?php echo $this->formHidden('selectedProduct', '0');?>
+<style type="text/css">
+
+    .x-panel-body .x-panel-body-noheader .x-panel-body-noborder{background-color:#fff;}	
+
+	#tree {
+        float:left;
+        margin:20px;
+        border:1px solid #c3daf9;
+	}
+	
+	.tree-new-icon .x-tree-node-icon{background-image:url(none);}
+	.icon-node-parent .x-tree-node-icon{background-image:url(none);}
+	.icon-form{background: url(<?php echo $this->skinUrl('/images/icons/Dialog.ico') ?>) 0 4px no-repeat !important; }
+	
+	.extensive-detail {
+		background-image:url(<?php echo $this->skinUrl('/images/icons/details.png') ?>) !important;
+	}
+</style>
+<div id="tabs1" style="margin: 0 auto; width:855px; margin-top: 10px; text-align: left;">
+	<div id="ProductCatalogTables"></div>
+</div>
+<div id="div-form-product">
+    <?php echo $this->render('maintenance/frm-edit-product.phtml');?>
+</div>
+<br />
