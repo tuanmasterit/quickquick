@@ -1,0 +1,38 @@
+<?php
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/object-catalog/tab-subject.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/object-catalog/tree-rank.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/object-catalog/form-subject.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/object-catalog/grid-subject.js');
+$this->headScript()
+->appendFile('js/quick/admin/core/maintenance/object-catalog.js');
+?>
+<?php echo $this->formHidden('selectedSubject', '0');?>
+<style type="text/css">
+
+    .x-panel-body .x-panel-body-noheader .x-panel-body-noborder{background-color:#fff;}	
+
+	#tree {
+        float:left;
+        margin:20px;
+        border:1px solid #c3daf9;
+	}
+	
+	.tree-new-icon .x-tree-node-icon{background-image:url(none);}
+	.icon-node-parent .x-tree-node-icon{background-image:url(none);}
+	.icon-form{background: url(<?php echo $this->skinUrl('/images/icons/Dialog.ico') ?>) 0 4px no-repeat !important; }
+	
+	.extensive-detail {
+		background-image:url(<?php echo $this->skinUrl('/images/icons/details.png') ?>) !important;
+	}
+</style>
+<div id="tabs1" style="margin: 0 auto; width:855px; margin-top: 10px; text-align: left;">
+	<div id="ObjectCatalogTables"></div>
+</div>
+<div id="div-form-subject">
+    <?php echo $this->render('maintenance/frm-edit-subject.phtml');?>
+</div>
+<br />
