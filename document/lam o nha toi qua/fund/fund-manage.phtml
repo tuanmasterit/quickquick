@@ -1,0 +1,42 @@
+<?php
+$this->headScript()
+->appendFile('js/quick/admin/accountant/fund/fund-manage/gird-fund.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/fund/fund-manage/gird-invoice.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/fund/fund-manage/form-fund.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/fund/fund-manage.js');
+?>
+
+<script type="text/javascript">
+	var convertedCurrencyId = <?php echo $this->convertedCurrencyId ?>;
+	var decimals = <?php echo $this->decimals ?>;
+	var decimalSeparator = '<?php echo $this->decimalSeparator ?>';
+	var thousandSeparator = '<?php echo $this->thousandSeparator ?>';
+</script>
+<style type="text/css">
+
+    .x-panel-body .x-panel-body-noheader .x-panel-body-noborder{background-color:#fff;}	
+	.icon-form{background: url(<?php echo $this->skinUrl('/images/icons/Dialog.ico') ?>) 0 4px no-repeat !important; }
+	
+	.blue-row .x-grid3-cell-inner{
+      color: #191970
+    }
+    .green-row .x-grid3-cell-inner{
+      color:green;
+    } 
+    
+    .red-row .x-grid3-cell-inner{
+      color:red;
+	}
+     
+     .format-row-total {
+      background: #EEE8AA;
+    }
+</style>
+
+<div id="tabs1" style="margin: 0 auto; width:1000px; margin-top: 10px; text-align: left;">
+	<div id="FundManageTables"></div>
+</div>
+<br />
