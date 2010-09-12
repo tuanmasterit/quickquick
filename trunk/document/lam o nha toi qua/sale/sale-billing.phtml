@@ -1,0 +1,122 @@
+<?php
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/gird-accounting-export.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/gird-accounting-amount.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/gird-accounting-vat.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/gird-inventory.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/gird-invoice.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/gird-detail.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing/form-invoice.js');
+$this->headScript()
+->appendFile('js/quick/admin/accountant/sale/sale-billing.js');
+?>
+<script type="text/javascript">
+	var convertedCurrencyId = <?php echo $this->convertedCurrencyId ?>;
+	var currentPeriodId = <?php echo $this->currentPeriodId ?>;
+	var decimals = <?php echo $this->decimals ?>;
+	var decimalSeparator = '<?php echo $this->decimalSeparator ?>';
+	var thousandSeparator = '<?php echo $this->thousandSeparator ?>';
+
+	var arrayProduct = new Array();
+	<?php /*foreach($this->listProduct as $product){
+		echo "arrayProduct.push({";
+		echo "'product_id':'".$product['product_id']."',";
+		echo "'product_code':'".$product['product_code']."',";
+		echo "'default_purchase_price':'".$product['default_purchase_price']."',";
+		echo "'regular_unit_id':'".$product['regular_unit_id']."',";
+		echo "'product_name':'".$product['product_name']."'});";
+	}*/
+	?>
+
+	var arrayService = new Array();
+	<?php /*foreach($this->listService as $service){
+		echo "arrayService.push({";
+		echo "'service_id':'".$service['service_id']."',";
+		echo "'service_code':'".$service['service_code']."',";
+		echo "'service_name':'".$service['service_name']."',";
+		echo "'unit_id':'".$service['unit_id']."'});";
+	}*/
+	?>
+
+	var arrayCurrency = new Array();
+	<?php foreach($this->listCurrency as $currency){
+		echo "arrayCurrency.push({";
+		echo "'currency_id':'".$currency['currency_id']."',";
+		echo "'currency_name':'".$currency['currency_name']."'});";
+	}
+	?>
+
+	var arrayTaxRate = new Array();
+	<?php foreach($this->listTaxRate as $taxRate){
+		echo "arrayTaxRate.push({";
+		echo "'tax_rate_id':'".$taxRate['tax_rate_id']."',";
+		echo "'tax_id':'".$taxRate['tax_id']."',";
+		echo "'rate':'".$taxRate['rate']."'});";
+	}
+	?>
+
+	var arraySpecificity = new Array();
+	<?php foreach($this->listSpecificity as $specificity){
+		echo "arraySpecificity.push({";
+		echo "'purchase_specificity_id':'".$specificity['purchase_specificity_id']."',";
+		echo "'specificity_text':'".$specificity['specificity_text']."',";
+		echo "'importValue':'".$specificity['importValue']."'});";
+	}
+	?>
+
+	var arrayUnit = new Array();
+	<?php foreach($this->listUnit as $unit){
+		echo "arrayUnit.push({";
+		echo "'unit_id':'".$unit['unit_id']."',";
+		echo "'unit_name':'".$unit['unit_name']."'});";
+	}
+	?>
+
+	var arrayWarehouse = new Array();
+	var arraySupplier = new Array();
+	<?php foreach($this->listSupplier as $supplier){
+		echo "arraySupplier.push({";
+		echo "'subject_id':'".$supplier['subject_id']."',";
+		echo "'subject_name':'".$supplier['subject_name']."'});";
+	}
+
+		foreach($this->listWarehouse as $item){
+			echo "arrayWarehouse.push({";
+			echo "'warehouse_id':'".$item['warehouse_id']."',";
+			echo "'warehouse_name':'".$item['warehouse_name']."'});";
+		}
+	?>
+
+</script>
+<style type="text/css">
+
+    .x-panel-body .x-panel-body-noheader .x-panel-body-noborder{background-color:#fff;}
+	.icon-form{background: url(<?php echo $this->skinUrl('/images/icons/Dialog.ico') ?>) 0 4px no-repeat !important; }
+
+	.blue-row .x-grid3-cell-inner{
+      color: #191970
+    }
+    .green-row .x-grid3-cell-inner{
+      color:green;
+    }
+
+    .red-row .x-grid3-cell-inner{
+      color:red;
+    }
+
+	.format-row-total {
+      background: #EEE8AA;
+    }
+
+</style>
+
+<div id="tabs1" style="margin: 0 auto; width:1000px; margin-top: 10px; text-align: left;">
+	<div id="SaleBillingTables"></div>
+</div>
+<br />
